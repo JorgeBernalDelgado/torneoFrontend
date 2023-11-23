@@ -1,0 +1,11 @@
+.logo-container {
+  width: 100%; /* Ajusta el ancho del div según tus necesidades */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-width: 100%; /* La imagen se ajustará automáticamente al ancho del div */
+  height: auto; /* La altura se ajustará proporcionalmente */
+}

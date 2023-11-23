@@ -1,0 +1,254 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<body>
+<div class="container-fluid" *ngIf="valor === 'x'">
+    <div class="row">
+        <div id="htmlData" class="col">
+            <div>
+                <img [src]="rutaHeaderFutbol" class="header-image">
+            </div>
+            <p class="program-title">PROGRAMACIÓN DE PARTIDOS</p>
+            <div *ngFor="let fecha of getUniqueDates()">
+                <h4 class="date-title">Partidos campeonato de {{deporteValue}} {{fecha}}</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>FASE</th>
+                            <th>JORNADA</th>
+                            <th>HORA</th>
+                            <th colspan="3" class="text-center">EQUIPOS</th>
+                            <th>CATEGORIA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let objeto of listaCalendarioMostrar">
+                            <ng-container *ngIf="objeto.fecha === fecha">
+                                <td>{{objeto.fase}}</td>
+                                <td>{{objeto.jornada}}</td>
+                                <td>{{objeto.hora}}</td>
+                                <td>{{objeto.equipoa}}</td>
+                                <td>VS</td>
+                                <td>{{objeto.equipob}}</td>
+                                <td>{{objeto.categoria}}</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <img [src]="rutaFooterFutbol" class="footer-image">
+            </div>
+        </div>                
+        <div>
+            <button class="btn btn-success download-btn" (click)="downloadPDF()">Descargar Programación</button>
+        </div> 
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="usuarioEnSesion !== null && usuarioEnSesion.roles.nombre === 'ROL_ADMIN' && valor !== 'x'">
+    <p-tabView>
+        <!-- Agregar Calendario TabPanel -->
+        <p-tabPanel header="Agregar Calendario">
+            <!-- Mensajes informativos -->
+            <p-messages severity="info">
+                <ng-template pTemplate>
+                    <div class="ml-2">1. Se debe seleccionar la fecha de los partidos a agendar</div>
+                    <div class="ml-2">2. Se debe agregar una fila para configurar el partido en el icono <p-button icon="pi pi-table"></p-button></div>
+                    <div class="ml-2">3. Se puede eliminar una fila de partido en el icono <p-button icon="pi pi-times-circle"></p-button></div>
+                    <div class="ml-2">4. Para guardar el calendario con los partidos se debe dar clic en el icono <p-button icon="pi pi-save"></p-button></div>
+                </ng-template>
+            </p-messages>
+            <!-- Contenido de la pestaña -->
+            <div class="row">
+                <!-- Controles para la fecha y botones -->
+                <div class="p-text-center col">
+                    <p-button icon="pi pi-table" (click)="agregarFila()" pTooltip="Agregar Partido" placeholder="Right"></p-button>&nbsp;
+                    <p-button icon="pi pi-times-circle" (click)="eliminarFila()" pTooltip="Eliminar Partido" placeholder="Right"></p-button>&nbsp;
+                    DÍA:
+                    <p-calendar aria-placeholder="Seleccionar Fecha" [(ngModel)]="fechaEncuentro"></p-calendar>
+                    <p-button [disabled]="!fechaEncuentro" icon="pi pi-save" (click)="guardarCalendario()" pTooltip="Guardar Calendario" placeholder="Right"></p-button>
+                </div>
+                <!-- Tabla para configurar los partidos -->
+                <p-table #dt1 [value]="filaTablaCalendario" dataKey="id" class="p-datatable-customers p-datatable-gridlines">
+                    <!-- Encabezado de la tabla -->
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>FASE</th>
+                            <th>JORNADA</th>
+                            <th>HORA</th>
+                            <th colspan="2">EQUIPOS</th>
+                            <th>CATEGORIA</th>
+                        </tr>
+                    </ng-template>
+                    <!-- Cuerpo de la tabla -->
+                    <ng-template pTemplate="body" let-fila>
+                        <tr>
+                            <td>
+                                <div class="col">
+                                    <select class="form-control" [(ngModel)]="fila.fase">
+                                        <option [ngValue]="null" disabled>{{labels.SELECCIONE_OPCION}}</option>
+                                        <option *ngFor="let item of listaFases" [ngValue]="item.nombre">
+                                            {{ item.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" pInputText class="form-control" [(ngModel)]="fila.jornada">
+                            </td>
+                            <td>
+                                <p-calendar [(ngModel)]="fila.hora" [timeOnly]="true" (change)="onChangeHora($event.target.value)" inputId="timeonly"></p-calendar>
+                            </td>
+                            <td>
+                                <div class="col">
+                                    <select class="form-control" [(ngModel)]="fila.equipoA">
+                                        <option [ngValue]="null" disabled>{{labels.SELECCIONE_OPCION}}</option>
+                                        <option *ngFor="let item of listaEquiposMostrar" [ngValue]="item.nombre">
+                                            {{ item.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col">
+                                    <select class="form-control" [(ngModel)]="fila.equipoB">
+                                        <option [ngValue]="null" disabled>{{labels.SELECCIONE_OPCION}}</option>
+                                        <option *ngFor="let item of listaEquiposMostrar" [ngValue]="item.nombre">
+                                            {{ item.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                {{categoriaValue.nombre}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <!-- Listar Calendario TabPanel -->
+        <p-tabPanel header="Listar Calendario">
+            <p-table #dt1 [value]="listaCalendarioListar" dataKey="id" class="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['']">
+                <!-- Encabezado de la tabla -->
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>FASE</th>
+                        <th>JORNADA</th>
+                        <th>HORA</th>
+                        <th colspan="2">EQUIPOS</th>
+                        <th>CATEGORIA</th>
+                        <th>FECHA</th>
+                        <th>OPCIONES</th>
+                    </tr>
+                </ng-template>
+                <!-- Cuerpo de la tabla -->
+                <ng-template pTemplate="body" let-fila>
+                    <tr>
+                        <td>{{fila.fase}}</td>
+                        <td>{{fila.jornada}}</td>
+                        <td>{{fila.hora}}</td>
+                        <td>{{fila.equipoa}}</td>
+                        <td>{{fila.equipob}}</td>
+                        <td>{{categoriaValue.nombre}}</td>
+                        <td>{{fila.fecha}}</td>
+                        <td class="p-text-center">
+                            <p-button icon="pi pi-user-edit" (click)="showModalDialog(fila)" pTooltip="Editar Partido" tooltipPosition="top"></p-button>&nbsp;
+                            <p-button icon="pi pi-times-circle" (click)="eliminarHorario(fila)" pTooltip="Eliminar Partido" tooltipPosition="top"></p-button>&nbsp;
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+</body>
+
+<p-dialog header="Editar Partido" [(visible)]="displayModalHorario" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <form [formGroup]="formDatosHorarioEditar" (ngSubmit)="editarHorario()">
+        <div class="row">
+            <div class="col">
+            <div class="form-group">
+                <label>Hora <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Hora" pInputText class="form-control" aria-label="Hora" formControlName="hora">
+                <small *ngIf="formDatosHorarioEditar.get('hora')?.errors?.required &&
+                formDatosHorarioEditar.get('hora')?.touched"
+                class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            </div>
+            </div>
+            <div class="col">
+            <div class="form-group">
+                <label>Fecha <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Fecha" pInputText class="form-control" aria-label="Fecha" formControlName="fecha">
+                <small *ngIf="formDatosHorarioEditar.get('fecha')?.errors?.required &&
+                formDatosHorarioEditar.get('fecha')?.touched"
+                class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label>{{labels.EQUIPO}}A <span class="estilo_campo_requerido">*</span></label>
+                    <select formControlName="equipoa" class="form-control">
+                     <option *ngFor="let item of listaEquiposMostrar" 
+                        [ngValue]="item.nombre === formDatosHorarioEditar.get('equipoa')!.value ? formDatosHorarioEditar.get('equipoa')!.value : item.nombre">
+                            {{item.nombre }}
+                        </option>
+                    </select>
+                    <small *ngIf="formDatosHorarioEditar.get('equipoa')?.errors?.required &&
+                    formDatosHorarioEditar.get('equipoa')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>{{labels.EQUIPO}}B <span class="estilo_campo_requerido">*</span></label>
+                    <select formControlName="equipob" class="form-control">
+                        <option *ngFor="let item of listaEquiposMostrar" 
+                        [ngValue]="item.nombre">
+                            {{item.nombre }}
+                        </option>
+                    </select>
+                    <small *ngIf="formDatosHorarioEditar.get('equipob')?.errors?.required &&
+                    formDatosHorarioEditar.get('equipob')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label>{{labels.FASE}}<span class="estilo_campo_requerido">*</span></label>
+                    <select formControlName="fase" class="form-control">
+                     <option *ngFor="let item of listaFases" 
+                        [ngValue]="item.nombre === formDatosHorarioEditar.get('fase')!.value ? formDatosHorarioEditar.get('fase')!.value : item.nombre">
+                            {{item.nombre }}
+                        </option>
+                    </select>
+                    <small *ngIf="formDatosHorarioEditar.get('fase')?.errors?.required &&
+                    formDatosHorarioEditar.get('fase')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>{{labels.JORNADA}} <span class="estilo_campo_requerido">*</span></label>
+                    <input type="number" pInputText class="form-control" formControlName="jornada">
+                    <small *ngIf="formDatosHorarioEditar.get('jornada')?.errors?.required &&
+                    formDatosHorarioEditar.get('jornada')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button type="submit" [disabled]="formDatosHorarioEditar.invalid" class="btn btn-primary" (click)="editarHorario()" >
+            <i class="pi pi-check">{{labels.ACTUALIZAR}}</i>
+          </button>
+          <button type="button" class="btn btn-primary" (click)="displayModalHorario=false" >
+            <i class="pi pi-times">{{labels.CANCELAR}}</i>
+          </button>
+    </ng-template>
+  </p-dialog>

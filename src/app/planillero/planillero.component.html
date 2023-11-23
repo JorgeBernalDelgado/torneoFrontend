@@ -1,0 +1,288 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<p-tabView>
+    <p-tabPanel header="Agregar Planillero">
+        <form [formGroup]="formDatosPlanillero" (ngSubmit)="agregarPlanillero()">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.NOMBRE_PLANILLERO}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Nombre Planillero" pInputText class="form-control" aria-label="Nombre Planillero" formControlName="nombrePlanillero">
+                  <small *ngIf="formDatosPlanillero.get('nombrePlanillero')?.errors?.required &&
+                                formDatosPlanillero.get('nombrePlanillero')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.APELLIDO_PLANILLERO}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Apellido Planillero" pInputText class="form-control" aria-label="Apellido Planillero" formControlName="apellidoPlanillero">
+                  <small *ngIf="formDatosPlanillero.get('apellidoPlanillero')?.errors?.required &&
+                                formDatosPlanillero.get('apellidoPlanillero')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Usuario" pInputText class="form-control" aria-label="Usuario" formControlName="usuario">
+                  <small *ngIf="formDatosPlanillero.get('usuario')?.errors?.required &&
+                                formDatosPlanillero.get('usuario')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Identificación" pInputText class="form-control" aria-label="Identificacion" formControlName="identificacion">
+                  <small *ngIf="formDatosPlanillero.get('identificacion')?.errors?.required &&
+                  formDatosPlanillero.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosPlanillero.get('identificacion')?.hasError('minlength') &&
+                  formDatosPlanillero.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                  <small *ngIf="formDatosPlanillero.get('identificacion')?.hasError('maxlength') &&
+                  formDatosPlanillero.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.ROL}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" disabled placeholder="Planillero" value="Planillero" pInputText class="form-control" aria-label="Rol" formControlName="idRol">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.CELULAR}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="number" placeholder="Celular" pInputText class="form-control" aria-label="Celular" formControlName="celular">
+                  <small *ngIf="formDatosPlanillero.get('celular')?.errors?.required &&
+                  formDatosPlanillero.get('celular')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosPlanillero.get('celular').errors?.invalidNumberLength"
+                  class="form-text text-danger">{{labels.MENSAJE_CELULAR}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label>{{labels.CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+                <div class="form-group"> 
+                  <input [type]="tipoContrasenaUno" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasena">
+                  <p-button [icon]="iconoOjoUno" (click)="primeraContrasena()" class="p-button-text"></p-button>
+                  <small *ngIf="formDatosPlanillero.get('contrasena')?.errors?.required &&
+                  formDatosPlanillero.get('contrasena')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+              <div class="col">
+                <label>{{labels.REPETIR_CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+                <div class="form-group">
+                  <input [type]="tipoContrasenaDos" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasenaRepetida">
+                  <p-button [icon]="iconoOjoDos" (click)="segundaContrasena()" class="p-button-text"></p-button>
+                  <small *ngIf="formDatosPlanillero.get('contrasenaRepetida')?.errors?.required &&
+                  formDatosPlanillero.get('contrasenaRepetida')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosPlanillero.hasError('passwordsMismatch') && formDatosPlanillero.get('contrasenaRepetida')?.dirty" class="form-text text-danger">
+                      {{labels.CONTRASENA_NO_COINCIDEN}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+          <button type="submit" [disabled]="formDatosPlanillero.invalid" class="btn btn-primary" (click)="agregarPlanillero()" >
+            <i class="pi pi-check">{{labels.GUARDAR}}</i>
+          </button>
+    </p-tabPanel>
+    <p-tabPanel header="Listar Planilleros">
+        <p-table #dt1 [value]="listaPlanillerosMostrar" dataKey="id"
+          styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre','apellido']">
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Planillero" />
+                    </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Nombre
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Apellido
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Identificación
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Celular
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Rol
+                </div>
+              </th>
+              <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Acciones
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-planillero>
+            <tr>
+              <td>
+                {{planillero.nombre}}
+              </td>
+              <td>
+                {{planillero.apellido}}
+              </td>
+              <td>
+                {{planillero.identificacion}}
+              </td>
+              <td>
+                {{planillero.celular}}
+              </td>
+              <td>
+                {{planillero.rol}}
+              </td>
+              <td class="p-text-center">
+                <p-button icon="pi pi-pencil" (click)="showModalDialog(planillero)" pTooltip="Editar Planillero" tooltipPosition="top"></p-button>&nbsp;
+                <p-button icon="pi pi-undo" (click)="showModalDialogContrasena(planillero)" pTooltip="Actualizar Contraseña" tooltipPosition="top"></p-button>&nbsp;
+                <p-button icon="pi pi-times-circle" (click)="eliminarPlanillero(planillero)" pTooltip="Eliminar Planillero" tooltipPosition="top"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-tabPanel>
+<p-tabView>
+
+<p-dialog header="Editar planillero" [(visible)]="displayModalPlanillero" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <form [formGroup]="formDatosPlanilleroEditar" (ngSubmit)="editarPlanillero()">
+        <div class="row">
+        <div class="col">
+            <div class="form-group">
+              <label>{{labels.NOMBRE_PLANILLERO}} <span class="estilo_campo_requerido">*</span></label>
+              <input type="text" placeholder="Nombre Planillero" pInputText class="form-control" aria-label="Nombre Planillero" formControlName="nombrePlanillero">
+              <small *ngIf="formDatosPlanilleroEditar.get('nombrePlanillero')?.errors?.required &&
+              formDatosPlanilleroEditar.get('nombrePlanillero')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+              <label>{{labels.APELLIDO_PLANILLERO}} <span class="estilo_campo_requerido">*</span></label>
+              <input type="text" placeholder="Apellido Planillero" pInputText class="form-control" aria-label="Apellido Planillero" formControlName="apellidoPlanillero">
+              <small *ngIf="formDatosPlanilleroEditar.get('apellidoPlanillero')?.errors?.required &&
+              formDatosPlanilleroEditar.get('apellidoPlanillero')?.touched"
+              class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col">
+              <div class="form-group">
+                <label>{{labels.USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Usuario" pInputText class="form-control" aria-label="Usuario" formControlName="usuario">
+                <small *ngIf="formDatosPlanilleroEditar.get('usuario')?.errors?.required &&
+                formDatosPlanilleroEditar.get('usuario')?.touched"
+                class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+              </div>
+          </div>
+        <div class="col">
+            <div class="form-group">
+              <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+              <input type="text" placeholder="Identificación" pInputText class="form-control" aria-label="Identificacion" formControlName="identificacion">
+              <small *ngIf="formDatosPlanilleroEditar.get('identificacion')?.errors?.required &&
+              formDatosPlanilleroEditar.get('identificacion')?.touched"
+              class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+              <small *ngIf="formDatosPlanilleroEditar.get('identificacion')?.hasError('minlength') &&
+              formDatosPlanilleroEditar.get('identificacion')?.touched"
+              class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+              <small *ngIf="formDatosPlanilleroEditar.get('identificacion')?.hasError('maxlength') &&
+              formDatosPlanilleroEditar.get('identificacion')?.touched"
+              class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col">
+            <div class="form-group">
+            <label>{{labels.ROL}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" disabled placeholder="Planillero" value="Planillero" pInputText class="form-control" aria-label="Rol" formControlName="idRol">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+              <label>{{labels.CELULAR}} <span class="estilo_campo_requerido">*</span></label>
+              <input type="number" placeholder="Celular" pInputText class="form-control" aria-label="Celular" formControlName="celular">
+              <small *ngIf="formDatosPlanilleroEditar.get('celular')?.errors?.required &&
+              formDatosPlanilleroEditar.get('celular')?.touched"
+              class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+              <small *ngIf="formDatosPlanilleroEditar.get('celular').errors?.invalidNumberLength"
+                  class="form-text text-danger">{{labels.MENSAJE_CELULAR}}</small>
+            </div>
+        </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button type="submit" [disabled]="formDatosPlanilleroEditar.invalid" class="btn btn-primary" (click)="editarPlanillero()" >
+          <i class="pi pi-check">{{labels.GUARDAR}}</i>
+        </button>
+        <button type="button" class="btn btn-primary" (click)="displayModalPlanillero=false" >
+          <i class="pi pi-times">{{labels.CANCELAR}}</i>
+        </button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Restablecer Contraseña" [(visible)]="displayModalContrasena" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formDatosContrasenaEditar" (ngSubmit)="editarContrasena()">
+    <div class="row">
+      <div class="col">
+        <label>{{labels.CONTRASENA_NUEVA}} <span class="estilo_campo_requerido">*</span></label>
+        <div class="form-group"> 
+          <input [type]="tipoContrasenaUno" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasena">
+          <p-button [icon]="iconoOjoUno" (click)="primeraContrasena()" class="p-button-text"></p-button>
+          <small *ngIf="formDatosContrasenaEditar.get('contrasena')?.errors?.required &&
+          formDatosContrasenaEditar.get('contrasena')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <label>{{labels.REPETIR_CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+        <div class="form-group">
+          <input [type]="tipoContrasenaDos" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasenaRepetida">
+          <p-button [icon]="iconoOjoDos" (click)="segundaContrasena()" class="p-button-text"></p-button>
+          <small *ngIf="formDatosContrasenaEditar.get('contrasenaRepetida')?.errors?.required &&
+          formDatosContrasenaEditar.get('contrasenaRepetida')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosContrasenaEditar.hasError('passwordsMismatch') && formDatosContrasenaEditar.get('contrasenaRepetida')?.dirty" class="form-text text-danger">
+                {{labels.CONTRASENA_NO_COINCIDEN}}
+            </small>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+      <button type="submit" [disabled]="formDatosContrasenaEditar.invalid" class="btn btn-primary" (click)="editarContrasena()" >
+        <i class="pi pi-check">{{labels.ACTUALIZAR}}</i>
+      </button>
+      <button type="button" class="btn btn-primary" (click)="displayModalContrasena=false" >
+        <i class="pi pi-times">{{labels.CANCELAR}}</i>
+      </button>
+  </ng-template>
+</p-dialog>

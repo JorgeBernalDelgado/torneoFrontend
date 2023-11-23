@@ -1,0 +1,172 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<p-tabView>
+    <p-tabPanel header="Agregar Usuario Admin">
+        <form [formGroup]="formDatosUsuario" (ngSubmit)="agregarUsuario()">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.NOMBRE_USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Nombre Usuario" pInputText class="form-control" aria-label="Nombre Usuario" formControlName="nombreUsuario">
+                  <small *ngIf="formDatosUsuario.get('nombreUsuario')?.errors?.required &&
+                  formDatosUsuario.get('nombreUsuario')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.APELLIDO_USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Apellido Usuario" pInputText class="form-control" aria-label="Apellido Usuario" formControlName="apellidoUsuario">
+                  <small *ngIf="formDatosUsuario.get('apellidoUsuario')?.errors?.required &&
+                  formDatosUsuario.get('apellidoUsuario')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Usuario" pInputText class="form-control" aria-label="Usuario" formControlName="usuario">
+                  <small *ngIf="formDatosUsuario.get('usuario')?.errors?.required &&
+                  formDatosUsuario.get('usuario')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Identificacion" pInputText class="form-control" aria-label="Identificacion" formControlName="identificacion">
+                  <small *ngIf="formDatosUsuario.get('identificacion')?.errors?.required &&
+                  formDatosUsuario.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosUsuario.get('identificacion')?.hasError('minlength') &&
+                  formDatosUsuario.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                  <small *ngIf="formDatosUsuario.get('identificacion')?.hasError('maxlength') &&
+                  formDatosUsuario.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.ROL}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" disabled placeholder="Admin" value="Admin" pInputText class="form-control" aria-label="Rol" formControlName="idRol">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.CELULAR}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="number" placeholder="Celular" pInputText class="form-control" aria-label="Celular" formControlName="celular">
+                  <small *ngIf="formDatosUsuario.get('celular')?.errors?.required &&
+                  formDatosUsuario.get('celular')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosUsuario.get('celular').errors?.invalidNumberLength"
+                  class="form-text text-danger">{{labels.MENSAJE_CELULAR}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label>{{labels.CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+                <div class="form-group"> 
+                  <input [type]="tipoContrasenaUno" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasena">
+                  <p-button [icon]="iconoOjoUno" (click)="primeraContrasena()" class="p-button-text"></p-button>
+                  <small *ngIf="formDatosUsuario.get('contrasena')?.errors?.required &&
+                  formDatosUsuario.get('contrasena')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>
+              </div>
+              <div class="col">
+                <label>{{labels.REPETIR_CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+                <div class="form-group">
+                  <input [type]="tipoContrasenaDos" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasenaRepetida">
+                  <p-button [icon]="iconoOjoDos" (click)="segundaContrasena()" class="p-button-text"></p-button>
+                  <small *ngIf="formDatosUsuario.get('contrasenaRepetida')?.errors?.required &&
+                  formDatosUsuario.get('contrasenaRepetida')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosUsuario.hasError('passwordsMismatch') && formDatosUsuario.get('contrasenaRepetida')?.dirty" class="form-text text-danger">
+                      {{labels.CONTRASENA_NO_COINCIDEN}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+          <ng-template pTemplate="footer">
+            <button type="submit" [disabled]="formDatosUsuario.invalid" class="btn btn-primary" (click)="agregarUsuario()" >
+              <i class="pi pi-check">{{labels.GUARDAR}}</i>
+            </button>
+          </ng-template>
+    </p-tabPanel>
+    <p-tabPanel header="Listar Usuario Admin">
+        <p-table #dt1 [value]="listaUsuariosMostrar" dataKey="id"
+        styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre','apellido']">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+            <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Usuario" />
+                    </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                Nombre
+                </div>
+            </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                Apellido
+                </div>
+            </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                Identificacion
+                </div>
+            </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                Celular
+                </div>
+            </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                Rol
+                </div>
+            </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                Acciones
+                </div>
+            </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+            <tr>
+            <td>
+                {{usuario.nombre}}
+            </td>
+            <td>
+                {{usuario.apellido}}
+            </td>
+            <td>
+                {{usuario.identificacion}}
+            </td>
+            <td>
+                {{usuario.celular}}
+            </td>
+            <td>
+                {{usuario.rol}}
+            </td>
+            <td class="p-text-center">
+                <p-button icon="pi pi-times-circle" (click)="eliminarUsuario(usuario)" pTooltip="Eliminar Usuario" tooltipPosition="top"></p-button>
+            </td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </p-tabPanel>
+</p-tabView>

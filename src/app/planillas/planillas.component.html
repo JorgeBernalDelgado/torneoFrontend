@@ -1,0 +1,241 @@
+<p-toast position="bottom-right" key="c"></p-toast> 
+<div class="container-fluid" *ngIf="campeonatovalue.deporte == 1">
+    <p-tabView> 
+        <p-tabPanel header="Planilla" id="htmlData">
+            <div>
+                <div>
+                    <img [src]="rutaHeaderFutbol" style="width: 100%;">
+                </div>
+                <p class="program-title">
+                    REPÚBLICA DE COLOMBIA
+                </p>
+                <p class="program-title">
+                    DEPARTAMENTO DE NARIÑO
+                </p>
+                <p class="program-title">
+                    MUNICIPIO DE BELÉN
+                </p>
+                <p class="program-title">
+                    PLANILLA DE INSCRIPCIÓN CAMPEONATO DE FUTBOL DE VERANO 2021
+                </p>
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">NOMBRE Y APELLIDOS</th>
+                        <th scope="col">No DOCUMENTO</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr *ngFor="let item of listaEquipoDeportistas">
+                            <td>{{item.no}}</td>
+                            <td>{{item.nombre }} {{ item.apellido}}</td>
+                            <td>{{item.identificacion}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <img [src]="rutaFooterFutbol" style="width: 100%;">
+                </div>
+            </div>                
+            <div>
+                <button [disabled]="descargarPlanilla" class="btn col col-lg-2 btn-success btn-block ml-2" (click)="downloadPDF()">
+                    {{labels.DESCARGAR_PLANILLA}}
+                </button>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Carnet">
+            <div>
+                    <div class="row row-cols-lg-3 g-4 g-lg-4">
+                        <div class="carnet-container" *ngFor ="let item of listaEquipoDeportistas">
+                            <div class="carnet" [id]="item.htmlDataCarnet" style="background-image: url('assets/img/fondo_carnet_futbol.jpg')">
+                              <div class="carnet-photo">
+                                <img class="foto-jugador" [src]="item.foto">
+                              </div>
+                              <div class="carnet-info">
+                                <h3 class="titulo-carnet">Carnet de Fútbol</h3>
+                                <div>
+                                  <label>Nombre:</label>
+                                  <span>{{item.nombre }} {{item.apellido}}</span>
+                                </div>
+                                <div>
+                                  <label>Equipo:</label>
+                                  <span>{{item.equipo}}</span>
+                                </div>
+                                <div>
+                                  <label>Identificación:</label>
+                                  <span>{{item.identificacion}}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                                <p-button (click)="downloadPDFCarnet(item)" pTooltip="Descargar Carnet" icon="pi pi-download" class="boton-descargar">
+                                </p-button>
+                            </div>
+                        </div>
+                    </div>  
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+<div class="container-fluid" *ngIf="campeonatovalue.deporte == 2">
+    <p-tabView> 
+        <p-tabPanel header="Planilla" id="htmlData">
+            <div>
+                <div>
+                    <img [src]="rutaHeaderFutbol" style="width: 100%;">
+                </div>
+                <p class="program-title">
+                    REPÚBLICA DE COLOMBIA
+                </p>
+                <p class="program-title">
+                    DEPARTAMENTO DE NARIÑO
+                </p>
+                <p class="program-title">
+                    MUNICIPIO DE BELÉN
+                </p>
+                <p class="program-title">
+                    COORDINACION DE DEPORTES, RECREACION Y CULTURA
+                </p>
+                <p class="program-title">
+                    CAMPEONATO DE BALONCESTO MUNICIPAL 
+                </p>
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">NOMBRE Y APELLIDOS</th>
+                        <th scope="col">No DOCUMENTO</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr *ngFor="let item of listaEquipoDeportistas">
+                            <td>{{item.no}}</td>
+                            <td>{{item.nombre }} {{ item.apellido}}</td>
+                            <td>{{item.identificacion}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <img [src]="rutaFooterFutbol" style="width: 100%;">
+                </div>
+            </div>                
+            <div>
+                <button [disabled]="descargarPlanilla" class="btn col col-lg-2 btn-success btn-block ml-2" (click)="downloadPDF()">
+                    {{labels.DESCARGAR_PLANILLA}}
+                </button>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Carnet" id="htmlData">
+            <div class="container-fluid">
+                <div class="row row-cols-lg-3 g-4 g-lg-4">
+                    <div class="carnet-container" *ngFor ="let item of listaEquipoDeportistas">
+                        <div class="carnet" [id]="item.htmlDataCarnet" style="background-image: url('assets/img/fondo_carnet_baloncesto.jpg')">
+                          <div class="carnet-photo">
+                            <img class="foto-jugador" [src]="item.foto">
+                          </div>
+                          <div class="carnet-info">
+                            <h3 class="titulo-carnet">Carnet de Baloncesto</h3>
+                            <div>
+                              <label>Nombre:</label>
+                              <span>{{item.nombre }} {{item.apellido}}</span>
+                            </div>
+                            <div>
+                              <label>Equipo:</label>
+                              <span>{{item.equipo}}</span>
+                            </div>
+                            <div>
+                              <label>Identificación:</label>
+                              <span>{{item.identificacion}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                            <p-button (click)="downloadPDFCarnet(item)" pTooltip="Descargar Carnet" icon="pi pi-download" class="boton-descargar"></p-button>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+<div class="container-fluid" *ngIf="campeonatovalue.deporte == 3">
+    <p-tabView> 
+        <p-tabPanel header="Planilla" id="htmlData">
+            <div>
+                <div>
+                    <img [src]="rutaHeaderFutbol" style="width: 100%;">
+                </div>
+                <p class="program-title">
+                    REPÚBLICA DE COLOMBIA
+                </p>
+                <p class="program-title">
+                    DEPARTAMENTO DE NARIÑO
+                </p>
+                <p class="program-title">
+                    MUNICIPIO DE BELÉN
+                </p>
+                <p class="program-title">
+                    PLANILLA DE INSCRIPCIÓN  CAMPEONATO DE MICRO FUTBOL CATEGORIA MUNICIPAL
+                </p>
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">NOMBRE Y APELLIDOS</th>
+                        <th scope="col">No DOCUMENTO</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr *ngFor="let item of listaEquipoDeportistas">
+                            <td>{{item.no}}</td>
+                            <td>{{item.nombre }} {{ item.apellido}}</td>
+                            <td>{{item.identificacion}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <img [src]="rutaFooterFutbol" style="width: 100%;">
+                </div>
+            </div>                
+            <div>
+                <button [disabled]="descargarPlanilla" class="btn col col-lg-2 btn-success btn-block ml-2" (click)="downloadPDF()">
+                    {{labels.DESCARGAR_PLANILLA}}
+                </button>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Carnet">
+            <div class="container-fluid">
+                <div class="row row-cols-lg-3 g-4 g-lg-4">
+                    <div class="carnet-container" *ngFor ="let item of listaEquipoDeportistas">
+                        <div class="carnet" [id]="item.htmlDataCarnet" style="background-image: url('assets/img/fondo_carnet_futsala.jpg')">
+                          <div class="carnet-photo">
+                            <img class="foto-jugador" [src]="item.foto">
+                          </div>
+                          <div class="carnet-info">
+                            <h3 class="titulo-carnet">Carnet de Futsala</h3>
+                            <div>
+                              <label>Nombre:</label>
+                              <span>{{item.nombre }} {{item.apellido}}</span>
+                            </div>
+                            <div>
+                              <label>Equipo:</label>
+                              <span>{{item.equipo}}</span>
+                            </div>
+                            <div>
+                              <label>Identificación:</label>
+                              <span>{{item.identificacion}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                            <p-button (click)="downloadPDFCarnet(item)" pTooltip="Descargar Carnet" icon="pi pi-download" class="boton-descargar"></p-button>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>

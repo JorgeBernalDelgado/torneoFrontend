@@ -1,0 +1,226 @@
+.estilo_campo_requerido {
+    text-align: left;
+    margin-bottom: 0.52vw;
+    letter-spacing: 0px;
+    color: #fd2b4c;
+    opacity: 1;
+}
+
+.p-picklist-buttons {
+    display: none !important;
+}
+
+.bordered {
+    background-color: #f39090;
+}
+
+/* Aumentar el tamaño de p-calendar */
+::ng-deep .p-calendar {
+  font-size: 16px; /* Tamaño de fuente */
+  width: 100%;    /* Ancho del calendario */
+  height: 100%;   /* Altura del calendario */
+}
+
+/* Aumentar el tamaño del calendario emergente */
+::ng-deep .p-datepicker {
+  font-size: 16px; /* Tamaño de fuente del calendario emergente */
+}
+
+.timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.timer-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.timer-controls .p-button {
+  font-size: 14px;
+}
+
+.timer-display {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.timer-knob {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+}
+
+.timer-knob p-knob {
+  width: 90px;
+  height: 90px;
+}
+
+@media (min-width: 768px) {
+  .timer-container {
+      flex-direction: row;
+  }
+
+  .timer-controls {
+      flex-wrap: nowrap;
+  }
+
+  .timer-display {
+      flex-wrap: nowrap;
+  }
+
+  .timer-knob {
+      font-size: 16px;
+  }
+
+  .timer-knob p-knob {
+      width: 100px;
+      height: 100px;
+  }
+}
+
+.my-container {
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.col-md-6 {
+  flex: 0 0 calc(50% - 10px);
+  max-width: calc(50% - 10px);
+}
+
+.team-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.team-name {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.info-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #fff;
+}
+
+.info-label {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.info-value {
+  text-align: center;
+  font-size: 24px;
+  margin: 0;
+}
+
+/* Estilo profesional para el encabezado h1 */
+h1 {
+  font-size: 36px; /* Tamaño de fuente */
+  font-weight: bold; /* Grosor de fuente */
+  color: #333; /* Color de texto */
+  text-transform: uppercase; /* Convertir el texto a mayúsculas */
+  text-align: center; /* Centrar el texto */
+  margin-bottom: 20px; /* Margen inferior */
+}
+
+/* Estilo profesional para el encabezado h1 */
+h2 {
+  font-size: 25px; /* Tamaño de fuente */
+  font-weight: bold; /* Grosor de fuente */
+  color: #333; /* Color de texto */
+  text-transform: uppercase; /* Convertir el texto a mayúsculas */
+  text-align: center; /* Centrar el texto */
+  margin-bottom: 20px; /* Margen inferior */
+}
+
+/* Estilo profesional para el contenedor principal */
+.select_periodo {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el contenedor del select */
+.col-periodo {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+/* Estilo para la etiqueta */
+.col-periodo label {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Estilo para el select */
+.form-control-periodo {
+  width: 200px;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para las opciones del select */
+.form-control-periodo option {
+  font-size: 30px;
+}
+
+/* Estilo para el contenedor principal */
+.table-container {
+  margin: 20px;
+}
+
+/* Estilo para las celdas de acciones */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Estilo para las celdas de cestas */
+.cestas {
+  margin-right: 10px;
+}
+
+/* Estilo para las celdas de falta */
+.falta {
+  margin-right: 10px;
+}
+
+/* Estilo para el número de faltas */
+.num-faltas {
+  font-weight: bold;
+  color: #d9534f; /* Color rojo */
+}

@@ -1,0 +1,270 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<p-tabView>
+  <p-tabPanel header="Agregar Deportista">
+      <form [formGroup]="formDatosJugador" (ngSubmit)="agregarJugador()">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                  <p-fileUpload #fileFotoDeportista multiple="multiple" name="files" maxFileSize="20000000" customUpload="true" 
+                  auto="auto" (uploadHandler)="upload($event)" chooseLabel="Seleccione Una Foto" uploadLabel="Seleccionar Foto" 
+                  accept=".png, .jpeg, .jpg" formControlName="fotoDeportista"> 
+                  </p-fileUpload>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                  <label>{{labels.NOMBRE_DEPORTISTA}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Nombre Deportista" pInputText class="form-control" aria-label="Nombre Jugador" formControlName="nombreJugador">
+                  <small *ngIf="formDatosJugador.get('nombreJugador')?.errors?.required &&
+                  formDatosJugador.get('nombreJugador')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+              </div>
+              <div class="form-group">
+                  <label>{{labels.APELLIDO_DEPORTISTA}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Apellido Deportista" pInputText class="form-control" aria-label="Apellido Jugador" formControlName="apellidoJugador">
+                  <small *ngIf="formDatosJugador.get('apellidoJugador')?.errors?.required &&
+                  formDatosJugador.get('apellidoJugador')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                  <label>{{labels.TIPO_IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+                  <select formControlName="tipoIdentificacion" class="form-control">
+                      <option value="">{{labels.SELECCIONE_OPCION}}</option>
+                      <option *ngFor="let item of listaTipoIdentificacion" 
+                      [ngValue]="item.codigo">
+                          {{ item.nombre }}
+                      </option>
+                  </select>
+                  <small *ngIf="formDatosJugador.get('tipoIdentificacion').errors?.required &&
+                  formDatosJugador.get('tipoIdentificacion').touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+                  <input type="text" placeholder="Identificación" pInputText class="form-control" aria-label="Identificación" formControlName="identificacion">
+                  <small *ngIf="formDatosJugador.get('identificacion')?.errors?.required &&
+                  formDatosJugador.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosJugador.get('identificacion')?.hasError('minlength') &&
+                  formDatosJugador.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                  <small *ngIf="formDatosJugador.get('identificacion')?.hasError('maxlength') &&
+                  formDatosJugador.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                  <div class="form-group">
+                      <label>{{labels.FECHA_NACIMIENTO}} <span class="estilo_campo_requerido">*</span></label><br>
+                      <p-calendar locale="es"
+                      formControlName="fechaNacimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2100" inputId="navigators"></p-calendar>
+                      <small *ngIf="formDatosJugador.get('fechaNacimiento')?.errors?.required"
+                      class="form-text text-danger">{{mensajeFechaNacimiento}}</small>
+                  </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label>{{labels.SELECCIONE_DOCUMENTO}}</label>
+                  <input id="file-upload" #subirdocu type="file" accept=".pdf"
+                                (change)="cargarImagen($event)" class="form-control" formControlName="documento"/>
+                </div> 
+              </div>
+            </div>
+            <div class="row"> 
+              <div class="col" *ngIf="deporteTorneo != 2">
+                <div class="form-group">
+                    <label>{{labels.POSICION}} <span class="estilo_campo_requerido">*</span></label>
+                    <!-- <input type="text" placeholder="Posicion" pInputText class="form-control" aria-label="Posicion" formControlName="posicion">
+                    <small *ngIf="formDatosJugador.get('posicion')?.errors?.required"
+                    class="form-text text-danger">{{mensajePosicion}}</small> -->
+                    <select formControlName="posicion" class="form-control">
+                      <option value="portero">
+                        Portero
+                      </option>
+                      <option value="jugador" selected>
+                        Jugador de Campo
+                      </option>
+                    </select>
+                    <small *ngIf="formDatosJugador.get('posicion').errors?.required &&
+                    formDatosJugador.get('posicion').touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                </div>  
+              </div>
+              <div class="col">
+
+              </div>
+            </div>
+          </div>
+        </form>
+        <ng-template pTemplate="footer">
+          <button type="submit" [disabled]="formDatosJugador.invalid" class="btn btn-primary" (click)="agregarJugador()" >
+            <i class="pi pi-check">{{labels.GUARDAR}}</i>
+          </button>
+        </ng-template>
+  </p-tabPanel>
+  <p-tabPanel header="Listar Deportistas">
+    <p-table #dt1 [value]="listaDeportistasMostrar" dataKey="id"
+      styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre','apellido']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Jugador" />
+                </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Nombre
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Apellido
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Identificación
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Equipo
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Acciones
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-deportista>
+        <tr>
+          <td>
+            {{deportista.nombre}}
+          </td>
+          <td>
+            {{deportista.apellido}}
+          </td>
+          <td>
+            {{deportista.identificacion}}
+          </td>
+          <td>
+            {{deportista.equipo}}
+          </td>
+          <td class="p-text-center">
+            <p-button icon="pi pi-user-edit" (click)="showModalDialogDeportista(deportista)" pTooltip="Editar Deportista" tooltipPosition="top"></p-button>&nbsp;
+            <p-button icon="pi pi-times-circle" (click)="eliminarDeportista(deportista)" pTooltip="Eliminar Deportista" tooltipPosition="top"></p-button>&nbsp;
+            <p-button icon="pi pi-download" (click)="descargarDocumento(deportista)" pTooltip="Descargar Documento" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>
+
+<p-dialog header="Editar Deportista" [(visible)]="displayModalDeportista" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formDatosJugadorEditar" (ngSubmit)="editarDeportista()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+            <label>{{labels.NOMBRE_DEPORTISTA}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Nombre Deportista" pInputText class="form-control" aria-label="Nombre Jugador" formControlName="nombreJugador">
+            <small *ngIf="formDatosJugadorEditar.get('nombreJugador')?.errors?.required &&
+            formDatosJugadorEditar.get('nombreJugador')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+        <div class="form-group">
+            <label>{{labels.APELLIDO_DEPORTISTA}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Apellido Deportista" pInputText class="form-control" aria-label="Apellido Jugador" formControlName="apellidoJugador">
+            <small *ngIf="formDatosJugadorEditar.get('apellidoJugador')?.errors?.required &&
+                  formDatosJugador.get('apellidoJugador')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <label>{{labels.TIPO_IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+            <select formControlName="tipoIdentificacion" class="form-control">
+                <option [ngValue]="null">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaTipoIdentificacion" 
+                [ngValue]="item.codigo">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="formDatosJugadorEditar.get('tipoIdentificacion').errors?.required &&
+            formDatosJugadorEditar.get('tipoIdentificacion').touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Identificación" pInputText class="form-control" aria-label="Identificación" formControlName="identificacion">
+            <small *ngIf="formDatosJugadorEditar.get('identificacion')?.errors?.required &&
+            formDatosJugadorEditar.get('identificacion')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <small *ngIf="formDatosJugadorEditar.get('identificacion')?.hasError('minlength') &&
+                  formDatosJugadorEditar.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+                  <small *ngIf="formDatosJugadorEditar.get('identificacion')?.hasError('maxlength') &&
+                  formDatosJugadorEditar.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.FECHA_NACIMIENTO}} <span class="estilo_campo_requerido">*</span></label>
+                <input type="date" placeholder="fecha nacimiento" pInputText class="form-control" aria-label="fecha nacimiento" formControlName="fechaNacimiento">
+            </div>
+        </div>
+        <div class="col" *ngIf="deporteTorneo != 2">
+          <div class="form-group">
+              <label>{{labels.POSICION}} <span class="estilo_campo_requerido">*</span></label>
+              <select formControlName="posicion" class="form-control">
+                <option value="portero">
+                  Portero
+                </option>
+                <option value="jugador">
+                  Jugador de Campo
+                </option>
+              </select>
+              <small *ngIf="formDatosJugadorEditar.get('posicion').errors?.required &&
+              formDatosJugadorEditar.get('posicion').touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>  
+      </div>
+      </div>
+      <div class="row">
+        <!-- <div class="col">
+          <div class="form-group">
+            <label>{{labels.SELECCIONE_DOCUMENTO}}</label>
+            <input id="file-upload" #subirdocu type="file" accept=".png, .jpeg, .jpg, .pdf"
+                          (change)="cargarImagen($event)" class="form-control"/>
+          </div> 
+        </div> -->
+        <!-- <div class="col">
+        </div> -->
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+      <button type="submit" [disabled]="formDatosJugadorEditar.invalid" class="btn btn-primary" (click)="editarDeportista()" >
+        <i class="pi pi-check">{{labels.GUARDAR}}</i>
+      </button>
+      <button type="button" class="btn btn-primary" (click)="displayModalDeportista=false" >
+        <i class="pi pi-times">{{labels.CANCELAR}}</i>
+      </button>
+  </ng-template>
+</p-dialog>

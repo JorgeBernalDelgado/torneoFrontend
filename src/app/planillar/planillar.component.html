@@ -1,0 +1,752 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<div class="container-fluid" *ngIf="comenzarPartido == false">
+    <div class="row" *ngIf="torneoValue.deporte == 1">
+        <div class="col">
+            <label>{{labels.EQUIPO }} A <span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" (change)="onChangeA($event.target.value)">
+                <option [ngValue]="null">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaEquiposMostrarA" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!equipoA"
+                              class="form-text text-danger">{{mensajeEquipoA}}</small>
+        </div>
+        <div class="col">
+            <label>{{labels.EQUIPO }} B <span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" (change)="onChangeB($event.target.value)">
+                <option [ngValue]="null">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaEquiposMostrarB" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!equipoB"
+                              class="form-text text-danger">{{mensajeEquipoB}}</small>
+        </div>
+    </div>
+    <div class="row" *ngIf="torneoValue.deporte == 2">
+        <div class="col">
+            <label>{{labels.EQUIPO }} A <span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" (change)="onChangeABA($event.target.value)">
+                <option [ngValue]="null">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaEquiposMostrarA" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!equipoA"
+                              class="form-text text-danger">{{mensajeEquipoA}}</small>
+        </div>
+        <div class="col">
+            <label>{{labels.EQUIPO }} B <span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" (change)="onChangeBBA($event.target.value)">
+                <option [ngValue]="null">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaEquiposMostrarB" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!equipoB"
+                              class="form-text text-danger">{{mensajeEquipoB}}</small>
+        </div>
+    </div>
+    <div class="row" *ngIf="torneoValue.deporte == 3">
+        <div class="col">
+            <label>{{labels.EQUIPO }} A <span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" (change)="onChangeAFU($event.target.value)">
+                <option [ngValue]="null" >{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaEquiposMostrarA" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!equipoA"
+                              class="form-text text-danger">{{mensajeEquipoA}}</small>
+        </div>
+        <div class="col">
+            <label>{{labels.EQUIPO }} B <span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" (change)="onChangeBFU($event.target.value)">
+                <option [ngValue]="null" >{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaEquiposMostrarB" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!equipoB"
+                              class="form-text text-danger">{{mensajeEquipoB}}</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p-pickList [source]="sourceItemsA" (onMoveToTarget)="contarJugadores($event)" (onMoveToSource)="contarJugadores($event)" [target]="targetItemsA" sourceHeader="Deportistas" targetHeader="Titulares" dragdrop="false"
+            [responsive]="true" [sourceStyle]="{'height':'300px'}" [showSourceControls]="false" (onMoveAllToSource)="contarJugadores($event)"
+            [showTargetControls]="false" [targetStyle]="{'height':'300px'}" (onMoveAllToTarget)="contarJugadores($event)">
+                <ng-template let-deportista pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-list-detail">
+                            <h5 class="p-mb-2">{{deportista.nombre}}</h5>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+            <small *ngIf="numeroMaximoTitularesFutbolA" 
+                              class="form-text text-danger">{{mensajeMaximoTitularesFutbolA}}</small>
+            <small *ngIf="numeroMinimoTitularesFutbolA" 
+                              class="form-text text-danger">{{mensajeMinimoTitularesFutbolA}}</small>
+            <small *ngIf="numeroMaximoTitularesBaloncestoA" 
+                              class="form-text text-danger">{{mensajeMaximoTitularesBaloncestoA}}</small>
+            <small *ngIf="numeroMinimoTitularesBaloncestoA" 
+                              class="form-text text-danger">{{mensajeMinimoTitularesBaloncestoA}}</small>
+            <small *ngIf="numeroMaximoTitularesFutbolSalaA" 
+                              class="form-text text-danger">{{mensajeMaximoTitularesFutbolSalaA}}</small>
+            <small *ngIf="numeroMinimoTitularesFutbolSalaA" 
+                              class="form-text text-danger">{{mensajeMinimoTitularesFutbolSalaA}}</small>
+        </div>
+        <div class="col">
+            <p-pickList [source]="sourceItemsB" (onMoveToTarget)="contarJugadores($event)" (onMoveToSource)="contarJugadores($event)" [target]="targetItemsB" sourceHeader="Deportistas" targetHeader="Titulares" dragdrop="false"
+            [responsive]="true" [sourceStyle]="{'height':'300px'}" [showSourceControls]="false" (onMoveAllToSource)="contarJugadores($event)"
+            [showTargetControls]="false" [targetStyle]="{'height':'300px'}" (onMoveAllToTarget)="contarJugadores($event)">
+                <ng-template let-deportista pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-list-detail">
+                            <h5 class="p-mb-2">{{deportista.nombre}}</h5>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+            <small *ngIf="numeroMaximoTitularesFutbolB" 
+                              class="form-text text-danger">{{mensajeMaximoTitularesFutbolB}}</small>
+            <small *ngIf="numeroMinimoTitularesFutbolB" 
+                              class="form-text text-danger">{{mensajeMinimoTitularesFutbolB}}</small>
+            <small *ngIf="numeroMaximoTitularesBaloncestoB" 
+                              class="form-text text-danger">{{mensajeMaximoTitularesBaloncestoB}}</small>
+            <small *ngIf="numeroMinimoTitularesBaloncestoB" 
+                              class="form-text text-danger">{{mensajeMinimoTitularesBaloncestoB}}</small>
+            <small *ngIf="numeroMaximoTitularesFutbolSalaB" 
+                              class="form-text text-danger">{{mensajeMaximoTitularesFutbolSalaB}}</small>
+            <small *ngIf="numeroMinimoTitularesFutbolSalaB" 
+                              class="form-text text-danger">{{mensajeMinimoTitularesFutbolSalaB}}</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.ARBITRO}} <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Arbitro" [(ngModel)]="arbitroValue" pInputText class="form-control">
+                <small *ngIf="!arbitroValue" 
+                              class="form-text text-danger">{{mensajeArbitro}}</small>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.FECHA}} <span class="estilo_campo_requerido">*</span></label><br>
+                <p-calendar [(ngModel)]="fechaEncuentro" dateFormat="dd-mm-yy"></p-calendar>
+                <small *ngIf="!fechaEncuentro" 
+                              class="form-text text-danger">{{mensajeFechaEcuentro}}</small>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.HORA}} <span class="estilo_campo_requerido">*</span></label><br>
+                <p-calendar [(ngModel)]="horaEncuentro" [timeOnly]="true" inputId="timeonly"></p-calendar>
+                <small *ngIf="!horaEncuentro" 
+                              class="form-text text-danger">{{mensajeHoraEncuentro}}</small>
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.CIUDAD}} <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Ciudad" [(ngModel)]="ciudadValue" pInputText class="form-control">
+                <small *ngIf="!ciudadValue" 
+                              class="form-text text-danger">{{mensajeCiudadEncuentro}}</small>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.JUEZ }} 1 <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Juez" [(ngModel)]="juez1Value" pInputText class="form-control">
+                <small *ngIf="!juez1Value" 
+                              class="form-text text-danger">{{mensajeJuez1}}</small>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.JUEZ }} 2 <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Juez" [(ngModel)]="juez2Value" pInputText class="form-control">
+                <small *ngIf="!juez2Value" 
+                              class="form-text text-danger">{{mensajeJuez2}}</small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label>{{labels.FASE}}<span class="estilo_campo_requerido">*</span></label>
+            <select class="form-control" [(ngModel)]="fase">
+                <option value="">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaFases" [ngValue]="item.nombre">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!fase" 
+                            class="form-text text-danger">{{mensajeFase}}</small>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>{{labels.JORNADA}}  <span class="estilo_campo_requerido">*</span></label>
+                <input type="text" placeholder="Jornada" [(ngModel)]="jornada" pInputText class="form-control">
+                <small *ngIf="!jornada" 
+                              class="form-text text-danger">{{mensajeJornada}}</small>
+            </div>
+        </div>
+    </div>
+    <p-button icon="pi pi-check" (click)="siguiente()" label="Siguiente" class="p-button-text"></p-button>
+</div>
+
+
+<div class="container-fluid" *ngIf="comenzarPartido">
+    <div *ngIf="torneoValue.deporte == 1">
+        <h1>Fútbol</h1>
+        <div class="timer-container">
+            <div class="timer-controls">
+                <p-button icon="pi pi-play" (click)="startTimer()" label="Reanudar" [disabled]="reanudar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-pause" (click)="pauseTimer()" label="Pausar" [disabled]="pausar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-power-off" (click)="initTimer()" label="Empezar" [disabled]="empezar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-refresh" (click)="restartTimer()" label="Reiniciar" class="p-button-text"></p-button>
+            </div>
+            <div class="timer-display">
+                <div class="timer-knob">
+                    <p-knob [(ngModel)]="cronoMin" [min]="0" [max]="60" showValue="false"></p-knob>
+                    <span>Minutos</span>
+                </div>
+                <div class="timer-knob">
+                    <p-knob [(ngModel)]="cronoSeg" [min]="0" [max]="60" showValue="false"></p-knob>
+                    <span>Segundos</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="my-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="team-container" pDroppable (onDrop)="drop()">
+                        <p class="team-name">{{nombreEquipoA}}</p>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Anotaciones</p>
+                            <h1 class="info-value">{{anotacionesA}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-container" pDroppable (onDrop)="drop()">
+                        <p class="team-name">{{nombreEquipoB}}</p>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Anotaciones</p>
+                            <h1 class="info-value">{{anotacionesB}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <h2>{{nombreEquipoA}}</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="col-1">No. DE CAMISETA</th>
+              <th scope="col">NOMBRE Y APELLIDO</th>
+              <th scope="col">GOL</th>
+              <th scope="col">T.A</th>
+              <th scope="col">Doble T.A</th>
+              <th scope="col">T.R</th>
+              <th scope="col">SUSTITUIR JUGADOR</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let item of titularesEquipoA" [ngClass]="item.isValidDobleTA == true? 'bordered': ''" [readonly]="true">
+              <td class="col-1"><input style="width: 50px;" type="text" pInputText /></td>
+              <td>{{item.nombre}}</td>
+              <td>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Anotar Gol" class="btn btn-primary" (click)="anotarGol(item, 1)" [disabled]="item.checkedGol">
+                  <i class="pi pi-check-square"></i>
+                </button>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Gol" class="btn btn-danger" (click)="quitarGol(item, 1)">
+                    <i class="pi pi-check-square"></i>
+                </button>
+              </td>
+              <td>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarTarjetaAmarilla(item, 1)" [disabled]="item.checkedTA">
+                  <i class="pi pi-check-square"></i>
+                </button>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaAmarilla(item, 1)">
+                    <i class="pi pi-check-square"></i>
+                </button>
+              </td>
+              <td>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarDobleTarjetaAmarilla(item, 1)" [disabled]="item.checkedDobleTA">
+                  <i class="pi pi-check-square"></i>
+                </button>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarDobleTarjetaAmarilla(item, 1)">
+                    <i class="pi pi-check-square"></i>
+                </button>
+              </td>
+              <td>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Roja" class="btn btn-primary" (click)="anotarTarjetaRoja(item, 1)" [disabled]="item.checkedTR">
+                  <i class="pi pi-check-square"></i>
+                </button>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaRoja(item, 1)">
+                    <i class="pi pi-check-square"></i>
+                </button>
+              </td>
+              <td>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Sustituir Jugador" class="btn btn-primary" [disabled]="item.isValidDobleTA" (click)="cambioJugadorA(item)">
+                  <i class="pi pi-sort-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br/>      
+        <h2>{{nombreEquipoB}}</h2>
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                <th scope="col">No. DE CAMISETA</th>
+                <th scope="col">NOMBRE Y APELLIDO</th>
+                <th scope="col">GOL</th>
+                <th scope="col">T.A</th>
+                <th scope="col">DOBLE T.A</th>
+                <th scope="col">T.R</th>
+                <th scope="col">SUSTITUIR JUGADOR</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider"  >
+                <tr *ngFor="let item of titularesEquipoB" [ngClass]="item.isValidDobleTA == true? 'bordered': ''" [readonly]="true">
+                    <td class="col-1"><input style="width: 50px;" type="text" pInputText /></td>
+                    <td>{{item.nombre}}</td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Gol" class="btn btn-primary" (click)="anotarGol(item, 2)" [disabled]="item.checkedGol" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Gol" class="btn btn-danger" (click)="quitarGol(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarTarjetaAmarilla(item, 2)" [disabled]="item.checkedTA" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaAmarilla(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarDobleTarjetaAmarilla(item, 2)" [disabled]="item.checkedDobleTA" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarDobleTarjetaAmarilla(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Roja" class="btn btn-primary" (click)="anotarTarjetaRoja(item, 2)" [disabled]="item.checkedTR" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Sustituir Jugador" class="btn btn-primary" [disabled]="item.isValidDobleTA" (click)="cambioJugadorB(item)" >
+                            <i class="pi pi-sort-alt"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaRoja(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label>{{labels.INFORME_ARBITRAL}}<span class="estilo_campo_requerido">*</span></label>
+            <textarea class="form-control" placeholder="Informe Arbitral" id="informeArbitralValue" [(ngModel)]="informeArbitralValue" rows="3"></textarea>
+            <small *ngIf="!informeArbitralValue" 
+                              class="form-text text-danger">{{mensajeInformeArbitral}}</small>
+        </div>
+    </div>
+    <div *ngIf="torneoValue.deporte == 2">
+        <h1>Baloncesto</h1>
+        <div class="timer-container">
+            <div class="timer-controls">
+                <p-button icon="pi pi-play" (click)="startTimer()" label="Reanudar" [disabled]="reanudar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-pause" (click)="pauseTimer()" label="Pausar" [disabled]="pausar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-power-off" (click)="initTimer()" label="Empezar" [disabled]="empezar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-refresh" (click)="restartTimer()" label="Reiniciar" class="p-button-text"></p-button>
+            </div>
+            <div class="timer-display">
+                <div class="timer-knob">
+                    <p-knob [(ngModel)]="cronoMin" [min]="0" [max]="60" showValue="false"></p-knob>
+                    <span>Minutos</span>
+                </div>
+                <div class="timer-knob">
+                    <p-knob [(ngModel)]="cronoSeg" [min]="0" [max]="60" showValue="false"></p-knob>
+                    <span>Segundos</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="my-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="team-container" pDroppable (onDrop)="drop()">
+                        <p class="team-name">{{nombreEquipoA}}</p>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Anotaciones</p>
+                            <h1 class="info-value">{{anotacionesA}}</h1>
+                        </div>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Faltas</p>
+                            <h1 class="info-value">{{faltasABA}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-container" pDroppable (onDrop)="drop()">
+                        <p class="team-name">{{nombreEquipoB}}</p>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Anotaciones</p>
+                            <h1 class="info-value">{{anotacionesB}}</h1>
+                        </div>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Faltas</p>
+                            <h1 class="info-value">{{faltasBBA}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="select_periodo">
+            <div class="col-periodo">
+                <label>{{labels.PERIODO }}</label>
+                <select class="form-control-periodo" (change)="cambiarPeriodo($event.target.value)">
+                    <option *ngFor="let item of listaPeriodos" 
+                    [ngValue]="item.codigo" [selected]="item.codigo == 1" >
+                        {{ item.nombre }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <h2>{{nombreEquipoA}}</h2>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">No. DE CAMISETA</th>
+                        <th scope="col">NOMBRE Y APELLIDO</th>
+                        <th scope="col">CESTAS</th>
+                        <th scope="col">FALTA</th>
+                        <th scope="col"># DE FALTAS</th>
+                        <th scope="col">SUSTITUIR JUGADOR</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr *ngFor="let item of titularesEquipoA">
+                        <td class="col-1">
+                            <input class="form-control" style="max-width: 50px;" type="text" pInputText />
+                        </td>
+                        <td>{{item.nombre}}</td>
+                        <td>
+                            <div class="btn-group actions cestas" role="group">
+                                <button type="button" class="btn btn-primary" (click)="anotarCesta(item, 1, 1)">+1</button>
+                                <button type="button" class="btn btn-danger" (click)="quitarCesta(item, 1, 1)">
+                                    <i class="pi pi-minus-circle"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary" (click)="anotarCesta(item, 1, 2)">+2</button>
+                                <button type="button" class="btn btn-danger" (click)="quitarCesta(item, 1, 2)">
+                                    <i class="pi pi-minus-circle"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary" (click)="anotarCesta(item, 1, 3)">+3</button>
+                                <button type="button" class="btn btn-danger" (click)="quitarCesta(item, 1, 3)">
+                                    <i class="pi pi-minus-circle"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-group actions falta" role="group">
+                                <button type="button" class="btn btn-primary" (click)="anotarFalta(item, 1)">
+                                    <i class="pi pi-check-square"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)="quitarFalta(item, 1)">
+                                    <i class="pi pi-minus-circle"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td><label class="num-faltas">{{item.numFaltas}}</label></td>
+                        <td>
+                            <p-button icon="pi pi-sort-alt" (click)="cambioJugadorA(item)" class="p-button-text"></p-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>{{nombreEquipoB}}</h2>
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                <th scope="col">No. DE CAMISETA</th>
+                <th scope="col">NOMBRE Y APELLIDO</th>
+                <th scope="col">CESTAS</th>
+                <th scope="col">FALTA</th>
+                <th scope="col"># DE FALTAS</th>
+                <th scope="col">SUSTITUIR JUGADOR</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider"  >
+                <tr *ngFor="let item of titularesEquipoB">
+                    <td class="col-1">
+                        <input class="form-control" style="max-width: 50px;" type="text" pInputText />
+                    </td>
+                    <td>{{item.nombre}}</td>
+                    <td>
+                        <div class="btn-group actions cestas" role="group">
+                            <button type="button" class="btn btn-primary" (click)="anotarCesta(item, 2, 1)">+1</button>
+                            <button type="button" class="btn btn-danger" (click)="quitarCesta(item, 2, 1)">
+                                <i class="pi pi-minus-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" (click)="anotarCesta(item, 2, 2)">+2</button>
+                            <button type="button" class="btn btn-danger" (click)="quitarCesta(item, 2, 2)">
+                                <i class="pi pi-minus-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" (click)="anotarCesta(item, 2, 3)">+3</button>
+                            <button type="button" class="btn btn-danger" (click)="quitarCesta(item, 2, 3)">
+                                <i class="pi pi-minus-circle"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group actions falta" role="group">
+                            <button type="button" class="btn btn-primary" (click)="anotarFalta(item, 2)">
+                                <i class="pi pi-check-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" (click)="quitarFalta(item, 2)">
+                                <i class="pi pi-minus-circle"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td><label class="num-faltas">{{item.numFaltas}}</label></td>
+                    <td>
+                        <p-button icon="pi pi-sort-alt" (click)="cambioJugadorB(item)" class="p-button-text"></p-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label>{{labels.INFORME_ARBITRAL}}<span class="estilo_campo_requerido">*</span></label>
+            <textarea class="form-control" placeholder="Informe Arbitral" id="informeArbitralValue" [(ngModel)]="informeArbitralValue" rows="3"></textarea>
+            <small *ngIf="!informeArbitralValue" 
+                              class="form-text text-danger">{{mensajeInformeArbitral}}</small>
+        </div>
+    </div>
+    <div *ngIf="torneoValue.deporte == 3">
+        <h1>Fútbol Sala</h1>
+        <div class="timer-container">
+            <div class="timer-controls">
+                <p-button icon="pi pi-play" (click)="startTimer()" label="Reanudar" [disabled]="reanudar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-pause" (click)="pauseTimer()" label="Pausar" [disabled]="pausar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-power-off" (click)="initTimer()" label="Empezar" [disabled]="empezar" class="p-button-text"></p-button>
+                <p-button icon="pi pi-refresh" (click)="restartTimer()" label="Reiniciar" class="p-button-text"></p-button>
+            </div>
+            <div class="timer-display">
+                <div class="timer-knob">
+                    <p-knob [(ngModel)]="cronoMin" [min]="0" [max]="60" showValue="false"></p-knob>
+                    <span>Minutos</span>
+                </div>
+                <div class="timer-knob">
+                    <p-knob [(ngModel)]="cronoSeg" [min]="0" [max]="60" showValue="false"></p-knob>
+                    <span>Segundos</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="my-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="team-container" pDroppable (onDrop)="drop()">
+                        <p class="team-name">{{nombreEquipoA}}</p>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Anotaciones</p>
+                            <h1 class="info-value">{{anotacionesA}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-container" pDroppable (onDrop)="drop()">
+                        <p class="team-name">{{nombreEquipoB}}</p>
+                        <div class="info-container" pDroppable (onDrop)="drop()">
+                            <p class="info-label">Anotaciones</p>
+                            <h1 class="info-value">{{anotacionesB}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <h2>{{nombreEquipoA}}</h2>
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                <th scope="col">No. DE CAMISETA</th>
+                <th scope="col">NOMBRE Y APELLIDO</th>
+                <th scope="col">GOL</th>
+                <th scope="col">T.A</th>
+                <th scope="col">DOBLE T.A</th>
+                <th scope="col">T.R</th>
+                <th scope="col">SUSTITUIR JUGADOR</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider"  >
+                <tr *ngFor="let item of titularesEquipoA" [ngClass]="item.isValidDobleTA == true? 'bordered': ''" [readonly]="true" >
+                    <td class="col-1"><input style="width: 50px;" type="text" pInputText /></td>
+                    <td>{{item.nombre}}</td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Gol" class="btn btn-primary" (click)="anotarGol(item, 1)" [disabled]="item.checkedGol" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Gol" class="btn btn-danger" (click)="quitarGol(item, 1)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarTarjetaAmarilla(item, 1)" [disabled]="item.checkedTA" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaAmarilla(item, 1)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarDobleTarjetaAmarilla(item, 1)" [disabled]="item.checkedDobleTA" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarDobleTarjetaAmarilla(item, 1)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Roja" class="btn btn-primary" (click)="anotarTarjetaRoja(item, 1)" [disabled]="item.checkedTR" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaRoja(item, 1)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Sustituir Jugador" class="btn btn-primary" [disabled]="item.isValidDobleTA" (click)="cambioJugadorA(item)" >
+                            <i class="pi pi-sort-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>{{nombreEquipoB}}</h2>
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                <th scope="col">No. DE CAMISETA</th>
+                <th scope="col">NOMBRE Y APELLIDO</th>
+                <th scope="col">GOL</th>
+                <th scope="col">T.A</th>
+                <th scope="col">DOBLE T.A</th>
+                <th scope="col">T.R</th>
+                <th scope="col">SUSTITUIR JUGADOR</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider"  >
+                <tr *ngFor="let item of titularesEquipoB" [ngClass]="item.isValidDobleTA == true? 'bordered': ''" [readonly]="true">
+                    <td class="col-1"><input style="width: 50px;" type="text" pInputText /></td>
+                    <td>{{item.nombre}}</td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Gol" class="btn btn-primary" (click)="anotarGol(item, 2)" [disabled]="item.checkedGol" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Gol" class="btn btn-danger" (click)="quitarGol(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarTarjetaAmarilla(item, 2)" [disabled]="item.checkedTA" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaAmarilla(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Amarilla" class="btn btn-primary" (click)="anotarDobleTarjetaAmarilla(item, 2)" [disabled]="item.checkedDobleTA" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarDobleTarjetaAmarilla(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Tarjeta Roja" class="btn btn-primary" (click)="anotarTarjetaRoja(item, 2)" [disabled]="item.checkedTR" >
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Quitar Tarjeta" class="btn btn-danger" (click)="quitarTarjetaRoja(item, 2)">
+                            <i class="pi pi-check-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Sustituir Jugador" class="btn btn-primary" [disabled]="item.isValidDobleTA" (click)="cambioJugadorB(item)" >
+                            <i class="pi pi-sort-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label>{{labels.INFORME_ARBITRAL}}<span class="estilo_campo_requerido">*</span></label>
+            <textarea class="form-control" placeholder="Informe Arbitral" id="informeArbitralValue" [(ngModel)]="informeArbitralValue" rows="3"></textarea>
+            <small *ngIf="!informeArbitralValue" 
+                              class="form-text text-danger">{{mensajeInformeArbitral}}</small>
+        </div>
+    </div>
+    <p-button icon="pi pi-times-circle" (click)="terminarJuego()" label="Terminar Juego" tooltipPosition="top"></p-button>
+</div>
+
+<p-dialog [header]="mensajeSustiturJugador" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div class="row">
+        <div class="col">
+            <select class="form-control" [(ngModel)]="seleccionadoA">
+                <option [ngValue]="null" >{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of sourceItemsA" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!seleccionadoA"
+                              class="form-text text-danger">{{mensajeSustituirJugadorA}}</small>
+        </div>
+    </div>
+    <p-button icon="pi pi-check" (click)="sustituirDeportista()"  label="Sustituir" class="p-button-text"></p-button>
+</p-dialog>
+
+<p-dialog [header]="mensajeSustiturJugador" [(visible)]="displayModalB" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div class="row">
+        <div class="col">
+            <select class="form-control" [(ngModel)]="seleccionadoB">
+                <option [ngValue]="null" >{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of sourceItemsB" 
+                [ngValue]="item.id">
+                    {{ item.nombre }}
+                </option>
+            </select>
+            <small *ngIf="!seleccionadoB"
+                              class="form-text text-danger">{{mensajeSustituirJugadorB}}</small>
+        </div>
+    </div>
+    <p-button icon="pi pi-check" (click)="sustituirDeportistaB()"  label="Sustituir" class="p-button-text"></p-button>
+</p-dialog>

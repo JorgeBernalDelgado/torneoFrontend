@@ -1,0 +1,160 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<body>
+    <div class="container">
+      <h2>Administrar Categorías</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dato of listaCategorias">
+            <td>{{dato.codigo}}</td>
+            <td>{{dato.nombre}}</td>
+            <td>
+              <button class="btn-delete" (click)="eliminarInfo(dato)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn-add" id="btnAdd">Agregar Categoría</button>
+        <div class="add-form" id="addForm">
+            <h3>Agregar Nueva Categoría</h3>
+            <form [formGroup]="formDatos">
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo" formControlName="codigo">
+                <small *ngIf="formDatos.get('codigo')?.errors?.required &&
+                formDatos.get('codigo')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" formControlName="nombre">
+                <small *ngIf="formDatos.get('nombre')?.errors?.required &&
+                formDatos.get('nombre')?.touched"
+                  class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                <button type="submit" (click)="agregarDato('categoria')" class="btn-add-submit">Agregar</button>
+                <button type="button" class="btn-cancel">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Administrar Rango de Años</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let dato of listaRangoAnnios">
+                <td>{{dato.codigo}}</td>
+                <td>{{dato.nombre}}</td>
+                <td>
+                <button class="btn-delete" (click)="eliminarInfo(dato)">Eliminar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn-add" id="btnAddRangoAnnio">Agregar Rango de Años</button>
+            <div class="add-form" id="addFormRangoAnnio">
+                <h3>Agregar Nuevo Rango</h3>
+                <form [formGroup]="formDatos" >
+                    <label for="codigo">Código:</label>
+                    <input type="text" id="codigo" name="codigo" formControlName="codigo">
+                    <small *ngIf="formDatos.get('codigo')?.errors?.required &&
+                    formDatos.get('codigo')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" formControlName="nombre">
+                    <small *ngIf="formDatos.get('nombre')?.errors?.required &&
+                    formDatos.get('nombre')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                    <button type="submit" (click)="agregarDato('rango_annio')" class="btn-add-submit">Agregar</button>
+                    <button type="button" class="btn-cancel">Cancelar</button>
+                </form>
+            </div>
+    </div>
+    <div class="container">
+        <h2>Administrar Localidades</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dato of listaLocalidades">
+              <td>{{dato.codigo}}</td>
+              <td>{{dato.nombre}}</td>
+              <td>
+                <button class="btn-delete" (click)="eliminarInfo(dato)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-add" id="btnAddLocalidad">Agregar Localidad</button>
+          <div class="add-form" id="addFormLocalidad">
+              <h3>Agregar Nueva Localidad</h3>
+              <form [formGroup]="formDatos" >
+                  <label for="codigo">Código:</label>
+                  <input type="text" id="codigo" name="codigo" formControlName="codigo">
+                  <small *ngIf="formDatos.get('codigo')?.errors?.required &&
+                  formDatos.get('codigo')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" id="nombre" name="nombre" formControlName="nombre">
+                  <small *ngIf="formDatos.get('nombre')?.errors?.required &&
+                  formDatos.get('nombre')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <button type="submit" (click)="agregarDato('localidad')" class="btn-add-submit">Agregar</button>
+                  <button type="button" class="btn-cancel">Cancelar</button>
+              </form>
+          </div>
+    </div>
+    <div class="container">
+        <h2>Administrar Divisiones</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dato of listaDivisiones">
+              <td>{{dato.codigo}}</td>
+              <td>{{dato.nombre}}</td>
+              <td>
+                <button class="btn-delete" (click)="eliminarInfo(dato)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-add" id="btnAddDivision">Agregar División</button>
+          <div class="add-form" id="addFormDivision">
+              <h3>Agregar Nueva División</h3>
+              <form [formGroup]="formDatos" >
+                  <label for="codigo">Código:</label>
+                  <input type="text" id="codigo" name="codigo" formControlName="codigo">
+                  <small *ngIf="formDatos.get('codigo')?.errors?.required &&
+                  formDatos.get('codigo')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" id="nombre" name="nombre" formControlName="nombre">
+                  <small *ngIf="formDatos.get('nombre')?.errors?.required &&
+                  formDatos.get('nombre')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+                  <button type="submit" (click)="agregarDato('division')" class="btn-add-submit">Agregar</button>
+                  <button type="button" class="btn-cancel">Cancelar</button>
+              </form>
+          </div>
+    </div>    
+</body>

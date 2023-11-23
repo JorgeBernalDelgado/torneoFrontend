@@ -1,0 +1,122 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+  }
+  
+  /* Estilos para botones */
+  .button {
+    display: inline-block;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn-delete {
+    background-color: #27ae60;
+    color: #ffffff;
+    border: none;
+    padding: 5px 5px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn-add {
+    background-color: #27ae60;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* ... (estilos anteriores) ... */
+.add-form {
+    display: none;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .add-form h3 {
+    margin-bottom: 10px;
+  }
+  
+  .add-form form {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .add-form label {
+    font-weight: bold;
+  }
+  
+  .add-form input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .btn-add-submit {
+    background-color: #27ae60;
+    color: #ffffff;
+    border: none;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn-cancel {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  

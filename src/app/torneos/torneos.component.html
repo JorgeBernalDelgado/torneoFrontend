@@ -1,0 +1,202 @@
+
+<p-toast position="bottom-right" key="c"></p-toast> 
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<body>
+<div class="container-fluid">
+  <div class="card" *ngIf="cargoDatos">
+    <div *ngIf="listaCampeonatosMostrar.length == 0" class="info-message">
+      <h2>¡No existen campeonatos actuales!</h2>
+    </div>
+    <div *ngIf="usuarioEnSesion.roles.nombre === 'ROL_ADMIN' && valor !== 'e' && valor !== 'c' && valor !== 'z' && valor !== 'r'"
+      class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between mt-4">
+      <button class="boton" (click)="showModalDialog()">
+        <i class="pi pi-external-link"></i> Agregar
+      </button>
+    </div>
+    <div class="row row-cols-lg-3 g-4 g-lg-4 mt-4">
+      <div *ngFor="let item of listaCampeonatosMostrar" class="col">
+        <div class="product-grid-item card">
+          <div (click)="verCampeonato(item)">
+            <div class="product-grid-item-content">
+              <img *ngIf="item.deporte === 'Fútbol'" [src]="rutaImagenFutbol" alt="Fútbol" class="imgDeporte">
+              <img *ngIf="item.deporte === 'Baloncesto'" [src]="rutaImagenBasket" alt="Baloncesto" class="imgDeporte">
+              <img *ngIf="item.deporte === 'Futsala'" [src]="rutaImagenFutsala" alt="Futsala" class="imgDeporte">
+              <div class="product-name">{{item.nombre_campeonato}}</div>
+              <div class="product-description">Rama: {{item.rama}}</div>
+              <div class="product-description">Categoria: {{item.categoria}}</div>
+            </div>
+          </div>
+          <div *ngIf="usuarioEnSesion.roles.nombre === 'ROL_ADMIN' && valor !== 'e' && valor !== 'c' && valor !== 'z' && valor !== 'r'" 
+            class="d-flex flex-column flex-md-row justify-content-md-between mt-2">
+            <button class="boton" (click)="eliminarCampeonato(item)" pTooltip="Eliminar Campeonato">
+              <i class="pi pi-times-circle"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Diálogo para crear campeonato -->
+<p-dialog header="Crear Campeonato" [(visible)]="displayModal" modal="true" [styleClass]="['custom-dialog']" baseZIndex="10000"
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="formDatosCampeonato" (ngSubmit)="agregarCampeonato()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.NOMBRE_CAMPEONATO}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" [(ngModel)]="inputTextNombreTorneo" (input)="onInputChange()" placeholder="Nombre Campeonato"
+            class="form-control" aria-label="Nombre Campeonato" formControlName="nombreCampeonato">
+            <small *ngIf="formDatosCampeonato.get('nombreCampeonato')?.errors?.required &&
+            formDatosCampeonato.get('nombreCampeonato')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.DEPORTE}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="deporte" class="form-control">
+            <option value="">{{labels.SELECCIONE_OPCION}}</option>
+            <option *ngFor="let item of deportesValue" [ngValue]="item.codigo">{{ item.nombre }}</option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('deporte')?.errors?.required &&
+            formDatosCampeonato.get('deporte')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.CATEGORIA}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="categoria" class="form-control">
+              <option value="" >{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of categoriasValue" 
+              [ngValue]="item.codigo">
+                  {{ item.nombre }}
+              </option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('categoria')?.errors?.required &&
+            formDatosCampeonato.get('categoria')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.RAMA}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="rama" class="form-control">
+              <option value="" >{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of ramasValue" 
+              [ngValue]="item.codigo">
+                  {{ item.nombre }}
+              </option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('rama')?.errors?.required &&
+            formDatosCampeonato.get('rama')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.LOCALIDAD}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="localidad" class="form-control">
+              <option value="" >{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of localidadesValue" 
+              [ngValue]="item.codigo">
+                  {{ item.nombre }}
+              </option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('localidad')?.errors?.required &&
+            formDatosCampeonato.get('localidad')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.RANGO_ANNIO}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="rangoAnnio" class="form-control">
+              <option value="" >{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of rangoAnniosValue" 
+              [ngValue]="item.codigo">
+                  {{ item.nombre }}
+              </option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('rangoAnnio')?.errors?.required &&
+            formDatosCampeonato.get('rangoAnnio')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.PLANILLA}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="planilla" class="form-control">
+              <option value="" >{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of planillasValue" 
+              [ngValue]="item.codigo">
+                  {{ item.nombre }}
+              </option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('planilla')?.errors?.required &&
+            formDatosCampeonato.get('planilla')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.DIVISION}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="division" class="form-control">
+              <option value="" >{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of divisionesValue" 
+              [ngValue]="item.codigo">
+                  {{ item.nombre }}
+              </option>
+          </select>
+          <small *ngIf="formDatosCampeonato.get('division')?.errors?.required &&
+            formDatosCampeonato.get('division')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <label>{{labels.CARNET}}<span class="estilo_campo_requerido">*</span></label>
+              <select formControlName="carnet" class="form-control">
+                  <option value="">{{labels.SELECCIONE_OPCION}}</option>
+                  <option *ngFor="let item of listacarnet" 
+                  [ngValue]="item.codigo">
+                      {{ item.nombre }}
+                  </option>
+              </select>
+              <small *ngIf="formDatosCampeonato.get('carnet')?.errors?.required &&
+            formDatosCampeonato.get('carnet')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.GRUPO}} <span
+          class="estilo_campo_requerido">*</span></label>
+          <input type="number" placeholder="Número de Grupos" class="form-control" aria-label="Numero de Grupos" formControlName="grupoCampeonato">
+          <small *ngIf="formDatosCampeonato.get('grupoCampeonato')?.errors?.required &&
+            formDatosCampeonato.get('grupoCampeonato')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button type="submit" [disabled]="formDatosCampeonato.invalid" class="btn btn-primary" (click)="agregarCampeonato()" >
+      <i class="pi pi-check">{{labels.GUARDAR}}</i>
+    </button>
+    <button type="button" class="btn btn-primary" (click)="displayModal=false" >
+      <i class="pi pi-times">{{labels.CANCELAR}}</i>
+    </button>
+  </ng-template>
+</p-dialog>  
+</body>

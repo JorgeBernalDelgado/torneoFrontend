@@ -1,0 +1,14 @@
+<p-toast position="bottom-right" key="c"></p-toast> 
+<body [background]="rutaImagenFutbol">
+    <div class="login-container">
+        <form class="login-form">
+            <h1>Ingresa</h1>
+            <input type="text" value="" placeholder="Usuario" id="username" [(ngModel)]="form.username" [ngModelOptions]="{standalone: true}" />
+            <input type="password" value="" placeholder="Contraseña" id="password" [(ngModel)]="form.password" [ngModelOptions]="{standalone: true}" />
+            <button (click)="onSubmit()">Aceptar</button>
+            <div class="alert-success" *ngIf="isLoggedIn">
+                Logged in as {{ roles }}.
+            </div>
+        </form>
+    </div>
+</body>

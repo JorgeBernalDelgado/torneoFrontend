@@ -1,0 +1,471 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="bottom-right" key="c"></p-toast> 
+<p-tabView>
+  <p-tabPanel header="Agregar Delegado">
+    <form [formGroup]="formDatosDelegado" (ngSubmit)="agregarDelegado()">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.NOMBRE_DELEGADO}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Nombre Delegado" pInputText class="form-control" aria-label="Nombre Delegado" formControlName="nombreDelegado">
+            <small *ngIf="formDatosDelegado.get('nombreDelegado')?.errors?.required &&
+                          formDatosDelegado.get('nombreDelegado')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.APELLIDO_DELEGADO}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Apellido Delegado" pInputText class="form-control" aria-label="Apellido Delegado" formControlName="apellidoDelegado">
+            <small *ngIf="formDatosDelegado.get('apellidoDelegado')?.errors?.required &&
+                          formDatosDelegado.get('apellidoDelegado')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Usuario" pInputText class="form-control" aria-label="Usuario" formControlName="usuario">
+            <small *ngIf="formDatosDelegado.get('usuario')?.errors?.required &&
+                          formDatosDelegado.get('usuario')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" placeholder="Identificación" pInputText class="form-control" aria-label="Identificación" formControlName="identificacion">
+            <small *ngIf="formDatosDelegado.get('identificacion')?.errors?.required &&
+                          formDatosDelegado.get('identificacion')?.touched"
+                    class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosDelegado.get('identificacion')?.hasError('minlength') &&
+                          formDatosDelegado.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+            <small *ngIf="formDatosDelegado.get('identificacion')?.hasError('maxlength') &&
+                          formDatosDelegado.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.ROL}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" disabled placeholder="Delegado" value="Delegado" pInputText class="form-control" aria-label="Rol" formControlName="idRol">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.CELULAR}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="number" placeholder="Celular" pInputText class="form-control" aria-label="Celular" formControlName="celular">
+            <small *ngIf="formDatosDelegado.get('celular')?.errors?.required &&
+                          formDatosDelegado.get('celular')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosDelegado.get('celular').errors?.invalidNumberLength"
+                  class="form-text text-danger">{{labels.MENSAJE_CELULAR}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label>{{labels.CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+          <div class="form-group"> 
+            <input [type]="tipoContrasenaUno" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasena">
+            <p-button [icon]="iconoOjoUno" (click)="primeraContrasena()" class="p-button-text"></p-button>
+            <small *ngIf="formDatosDelegado.get('contrasena')?.errors?.required &&
+                          formDatosDelegado.get('contrasena')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+        </div>
+        <div class="col">
+          <label>{{labels.REPETIR_CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+          <div class="form-group">
+            <input [type]="tipoContrasenaDos" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasenaRepetida">
+            <p-button [icon]="iconoOjoDos" (click)="segundaContrasena()" class="p-button-text"></p-button>
+            <small *ngIf="formDatosDelegado.get('contrasenaRepetida')?.errors?.required &&
+                          formDatosDelegado.get('contrasenaRepetida')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosDelegado.hasError('passwordsMismatch') && formDatosDelegado.get('contrasenaRepetida')?.dirty" class="form-text text-danger">
+                {{labels.CONTRASENA_NO_COINCIDEN}}
+            </small>
+          </div>
+        </div>
+        
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+      <button type="submit" [disabled]="formDatosDelegado.invalid" class="btn btn-primary" (click)="agregarDelegado()" >
+        <i class="pi pi-check">{{labels.GUARDAR}}</i>
+      </button>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel header="Listar Delegados">
+    <p-table #dt1 [value]="listaDelegadosMostrar" dataKey="id"
+      styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre','apellido']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Delegado" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Nombre
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Apellido
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Identificación
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Celular
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Rol
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Acciones
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-delegado>
+        <tr>
+          <td>
+            {{delegado.nombre}}
+          </td>
+          <td>
+            {{delegado.apellido}}
+          </td>
+          <td>
+            {{delegado.identificacion}}
+          </td>
+          <td>
+            {{delegado.celular}}
+          </td>
+          <td>
+            {{delegado.rol}}
+          </td>
+          <td class="p-text-center">
+            <p-button icon="pi pi-pencil" (click)="showModalDialog(delegado)" pTooltip="Editar Delegado" tooltipPosition="top"></p-button>&nbsp;
+            <p-button icon="pi pi-undo" (click)="showModalDialogContrasena(delegado)" pTooltip="Actualizar Contraseña" tooltipPosition="top"></p-button>&nbsp;
+            <p-button icon="pi pi-times-circle" (click)="eliminarDelegado(delegado)" pTooltip="Eliminar Delegado" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+  <p-tabPanel header="Agregar Equipo">
+    <form [formGroup]="formDatosEquipo" (ngSubmit)="agregarEquipo()">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.NOMBRE_EQUIPO}} <span class="estilo_campo_requerido">*</span></label>
+            <input type="text" [(ngModel)]="inputTextNombreEquipo" (input)="onInputChange()" placeholder="Nombre Equipo" pInputText class="form-control" aria-label="Nombre Equipo" formControlName="nombreEquipo">
+            <small *ngIf="formDatosEquipo.get('nombreEquipo')?.errors?.required &&
+                          formDatosEquipo.get('nombreEquipo')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.DELEGADO}} <span class="estilo_campo_requerido">*</span></label>
+            <select formControlName="idDelegado" class="form-control">
+                <option value="">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaDelegadosMostrar" 
+                [ngValue]="item.id">
+                    {{item.nombre }} {{item.apellido}}
+                </option>
+            </select>
+            <small *ngIf="formDatosEquipo.get('idDelegado').errors?.required &&
+                        formDatosEquipo.get('idDelegado').touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>{{labels.GRUPO}} <span class="estilo_campo_requerido">*</span></label>
+            <select formControlName="idGrupo" class="form-control">
+                <option value="">{{labels.SELECCIONE_OPCION}}</option>
+                <option *ngFor="let item of listaGruposMostrar" 
+                [ngValue]="item.id">
+                    {{item.codigo }} 
+                </option>
+            </select>
+            <small *ngIf="formDatosEquipo.get('idGrupo').errors?.required &&
+                        formDatosEquipo.get('idGrupo').touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+          </div> 
+        </div>
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+      <button type="submit" [disabled]="formDatosEquipo.invalid" class="btn btn-primary" (click)="agregarEquipo()" >
+        <i class="pi pi-check">{{labels.GUARDAR}}</i>
+      </button>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel header="Listar Equipos">
+    <p-table #dt1 [value]="listaEquiposMostrar" dataKey="id"
+      styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombreEquipo','idCampeonato']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Equipo" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Nombre
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Campeonato
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Delegado
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Grupo
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Acciones
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-equipo>
+        <tr>
+          <td>
+            {{equipo.nombre}}
+          </td>
+          <td>
+            {{equipo.campeonato}}
+          </td>
+          <td>
+            {{equipo.delegado}}
+          </td>
+          <td>
+            {{equipo.grupo}}
+          </td>
+          <td class="p-text-center">
+            <p-button icon="pi pi-pencil" (click)="showModalDialogEquipo(equipo)" pTooltip="Editar Equipo" tooltipPosition="top"></p-button>&nbsp;
+            <p-button icon="pi pi-times-circle" (click)="eliminarEquipo(equipo)" pTooltip="Eliminar Equipo" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>
+
+<p-dialog header="Editar Delegado" [(visible)]="displayModalDelegado" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formDatosDelegadoEditar" (ngSubmit)="editarDelegado()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.NOMBRE_DELEGADO}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" placeholder="Nombre Delegado" pInputText class="form-control" aria-label="Nombre Delegado" formControlName="nombreDelegado">
+          <small *ngIf="formDatosDelegadoEditar.get('nombreDelegado')?.errors?.required &&
+          formDatosDelegadoEditar.get('nombreDelegado')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.APELLIDO_DELEGADO}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" placeholder="Apellido Delegado" pInputText class="form-control" aria-label="Apellido Delegado" formControlName="apellidoDelegado">
+          <small *ngIf="formDatosDelegadoEditar.get('apellidoDelegado')?.errors?.required &&
+          formDatosDelegadoEditar.get('apellidoDelegado')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.USUARIO}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" placeholder="Usuario" pInputText class="form-control" aria-label="Usuario" formControlName="usuario">
+          <small *ngIf="formDatosDelegadoEditar.get('usuario')?.errors?.required &&
+          formDatosDelegadoEditar.get('usuario')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.IDENTIFICACION}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" placeholder="Identificación" pInputText class="form-control" aria-label="Identificación" formControlName="identificacion">
+          <small *ngIf="formDatosDelegadoEditar.get('identificacion')?.errors?.required &&
+          formDatosDelegadoEditar.get('identificacion')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosDelegadoEditar.get('identificacion')?.hasError('minlength') &&
+            formDatosDelegadoEditar.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+            <small *ngIf="formDatosDelegadoEditar.get('identificacion')?.hasError('maxlength') &&
+            formDatosDelegadoEditar.get('identificacion')?.touched"
+                          class="form-text text-danger">{{labels.MENSAJE_MIN_MAX_IDENTIFICACIOM}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.ROL}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" disabled placeholder="Delegado" value="Delegado" pInputText class="form-control" aria-label="Rol" formControlName="idRol">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.CELULAR}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="number" placeholder="Celular" pInputText class="form-control" aria-label="Celular" formControlName="celular">
+          <small *ngIf="formDatosDelegadoEditar.get('celular')?.errors?.required &&
+          formDatosDelegadoEditar.get('celular')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosDelegado.get('celular').errors?.invalidNumberLength"
+                  class="form-text text-danger">{{labels.MENSAJE_CELULAR}}</small>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button type="submit" [disabled]="formDatosDelegadoEditar.invalid" class="btn btn-primary" (click)="editarDelegado()" >
+      <i class="pi pi-check">{{labels.GUARDAR}}</i>
+    </button>
+    <button type="button" class="btn btn-primary" (click)="displayModalDelegado=false" >
+      <i class="pi pi-times">{{labels.CANCELAR}}</i>
+    </button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Editar Equipo" [(visible)]="displayModalEquipo" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formDatosEquipoEditar" (ngSubmit)="editarEquipo()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.NOMBRE_EQUIPO}} <span class="estilo_campo_requerido">*</span></label>
+          <input type="text" [(ngModel)]="inputTextNombreEquipo" (input)="onInputChange()" placeholder="Nombre Equipo" pInputText class="form-control" aria-label="Nombre Equipo" formControlName="nombreEquipo">
+          <small *ngIf="formDatosEquipoEditar.get('nombreEquipo')?.errors?.required &&
+                        formDatosEquipoEditar.get('nombreEquipo')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.CAMPEONATO}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="idCampeonato" class="form-control">
+              <option [ngValue]="null" disabled>{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of listaCampeonatosMostrar" 
+              [ngValue]="item.id">
+                  {{ item.nombre_campeonato }}
+              </option>
+          </select>
+          <small *ngIf="formDatosEquipoEditar.get('idCampeonato')?.errors?.required &&
+                        formDatosEquipoEditar.get('idCampeonato')?.touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{labels.DELEGADO}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="idDelegado" class="form-control">
+              <option [ngValue]="null" disabled>{{labels.SELECCIONE_OPCION}}</option>
+              <option *ngFor="let item of listaDelegadosMostrar" 
+              [ngValue]="item.id">
+                  {{ item.nombre }} {{ item.apellido }}
+              </option>
+          </select>
+          <small *ngIf="formDatosEquipoEditar.get('idDelegado')?.errors?.required &&
+                        formDatosEquipoEditar.get('idDelegado')?.touched"
+                        class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <label>{{labels.GRUPO}} <span class="estilo_campo_requerido">*</span></label>
+          <select formControlName="idGrupo" class="form-control">
+              <option [ngValue]="item.id === formDatosEquipoEditar.get('idGrupo')!.value? formDatosEquipoEditar.get('idGrupo')!.value: item.id"
+                      *ngFor="let item of listaGruposMostrar" >
+                  {{ item.codigo }}
+              </option>
+          </select>
+          <small *ngIf="formDatosEquipoEditar.get('idGrupo')?.errors?.required &&
+                      formDatosEquipoEditar.get('idGrupo')?.touched"
+                      class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button type="submit" [disabled]="formDatosEquipoEditar.invalid" class="btn btn-primary" (click)="editarEquipo()" >
+      <i class="pi pi-check">{{labels.GUARDAR}}</i>
+    </button>
+    <button type="button" class="btn btn-primary" (click)="displayModalEquipo=false" >
+      <i class="pi pi-times">{{labels.CANCELAR}}</i>
+    </button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Restablecer Contraseña" [(visible)]="displayModalContrasena" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formDatosContrasenaEditar" (ngSubmit)="editarContrasena()">
+    <div class="row">
+      <div class="col">
+        <label>{{labels.CONTRASENA_NUEVA}} <span class="estilo_campo_requerido">*</span></label>
+        <div class="form-group"> 
+          <input [type]="tipoContrasenaUno" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasena">
+          <p-button [icon]="iconoOjoUno" (click)="primeraContrasena()" class="p-button-text"></p-button>
+          <small *ngIf="formDatosContrasenaEditar.get('contrasena')?.errors?.required &&
+          formDatosContrasenaEditar.get('contrasena')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+        </div>
+      </div>
+      <div class="col">
+        <label>{{labels.REPETIR_CONTRASENA}} <span class="estilo_campo_requerido">*</span></label>
+        <div class="form-group">
+          <input [type]="tipoContrasenaDos" placeholder="Ingrese contraseña" pInputText aria-label="Contraseña" formControlName="contrasenaRepetida">
+          <p-button [icon]="iconoOjoDos" (click)="segundaContrasena()" class="p-button-text"></p-button>
+          <small *ngIf="formDatosContrasenaEditar.get('contrasenaRepetida')?.errors?.required &&
+          formDatosContrasenaEditar.get('contrasenaRepetida')?.touched"
+            class="form-text text-danger">{{labels.CAMPO_OBLIGATORIO_LABEL}}</small>
+            <small *ngIf="formDatosContrasenaEditar.hasError('passwordsMismatch') && formDatosContrasenaEditar.get('contrasenaRepetida')?.dirty" class="form-text text-danger">
+                {{labels.CONTRASENA_NO_COINCIDEN}}
+            </small>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button type="submit" [disabled]="formDatosContrasenaEditar.invalid" class="btn btn-primary" (click)="editarContrasena()" >
+      <i class="pi pi-check">{{labels.ACTUALIZAR}}</i>
+    </button>
+    <button type="button" class="btn btn-primary" (click)="displayModalContrasena=false" >
+      <i class="pi pi-times">{{labels.CANCELAR}}</i>
+    </button>
+  </ng-template>
+</p-dialog>

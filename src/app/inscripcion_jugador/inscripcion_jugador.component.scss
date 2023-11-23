@@ -1,0 +1,14 @@
+.estilo_campo_requerido {
+    text-align: left;
+    margin-bottom: 0.52vw;
+    letter-spacing: 0px;
+    color: #fd2b4c;
+    opacity: 1;
+}
+
+/* Aumentar el tamaño de p-calendar */
+::ng-deep .p-calendar {
+    font-size: 16px; /* Tamaño de fuente */
+    width: 100%;    /* Ancho del calendario */
+    height: 100%;   /* Altura del calendario */
+  }

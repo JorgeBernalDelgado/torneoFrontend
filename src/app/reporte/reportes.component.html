@@ -1,0 +1,47 @@
+
+<p-toast position="bottom-right" key="c"></p-toast> 
+<div class="table-container">
+	<table class="custom-table" #htmlData>
+	  <thead>
+		<tr>
+		  <th>Anotaciones EquipoA</th>
+		  <th>Anotaciones EquipoB</th>
+		  <th>Arbitro</th>
+		  <th>Categoría</th>
+		  <th>Ganador del Partido</th>
+		  <th>Fecha</th>
+		  <th>Hora</th>
+		  <th>Informe Arbitral</th>
+		  <th>Juez1</th>
+		  <th>Juez2</th>
+		  <th>Campeonato</th>
+		  <th>EquipoA</th>
+		  <th>EquipoB</th>
+		  <th>Fase</th>
+		  <th>Jornada</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr *ngFor="let detalle of listaDetallePartidoMostrar">
+		  <td>{{ detalle.anotacionesa }}</td>
+		  <td>{{ detalle.anotacionesb }}</td>
+		  <td>{{ detalle.arbitro }}</td>
+		  <td>{{ detalle.categoria }}</td>
+		  <td>{{ detalle.equipoGanador }}</td>
+		  <td>{{ detalle.fecha }}</td>
+		  <td>{{ detalle.hora }}</td>
+		  <td>{{ detalle.informeArbitral }}</td>
+		  <td>{{ detalle.juez1 }}</td>
+		  <td>{{ detalle.juez2 }}</td>
+		  <td>{{ detalle.campeonato }}</td>
+		  <td>{{ detalle.equipoa }}</td>
+		  <td>{{ detalle.equipob }}</td>
+		  <td>{{ detalle.fase }}</td>
+		  <td>{{ detalle.jornada }}</td>
+		</tr>
+	  </tbody>
+	</table>
+  </div>
+<div>
+    <button class="btn btn-success download-btn" (click)="downloadPDF()">Descargar Reporte</button>
+</div> 

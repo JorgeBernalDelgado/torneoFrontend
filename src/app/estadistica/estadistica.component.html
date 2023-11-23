@@ -1,0 +1,168 @@
+
+<p-tabView>
+    <p-tabPanel header="Posiciones">
+        <p-table #dt1 [value]="listaPosicionEquipos" dataKey="id"
+        styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Equipo" />
+                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!-- <select>
+                        <option [ngValue]="null" disabled>{{labels.SELECCIONE_OPCION}}</option>
+                        <option *ngFor="let item of listaGruposMostrar" 
+                        [ngValue]="item.id">
+                            {{ item.codigo }}
+                        </option>
+                    </select> -->
+                    <label>Seleccionar Grupo:</label>&nbsp;
+                    <p-dropdown (onChange)="cambiarGrupos($event)" [options]="listaGruposMostrar" [(ngModel)]="grupoValue" optionLabel="codigo"></p-dropdown>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Posición
+                        </div>
+                    </th>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Equipo
+                        </div>
+                    </th>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Puntos
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-equipo>
+                <tr>
+                    <td>
+                        {{equipo.posicion}}
+                    </td>
+                    <td>
+                        {{equipo.nombre}}
+                    </td>
+                    <td>
+                        {{equipo.puntos}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+    <p-tabPanel [header]="nombreAnotador">
+        <p-table #dt1 [value]="listaDeportistasAnotaciones" dataKey="id"
+        styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre','apellido']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" [placeholder]="buscarAnotador" />
+                        </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Nombre
+                        </div>
+                    </th>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Apellido
+                        </div>
+                    </th>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Equipo
+                        </div>
+                    </th>
+                    <th *ngIf="deporteTorneo == 1 || deporteTorneo == 3">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Goles
+                        </div>
+                    </th>
+                    <th *ngIf="deporteTorneo == 2">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Cestas
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-deportista>
+                <tr>
+                    <td>
+                        {{deportista.nombre}}
+                    </td>
+                    <td>
+                        {{deportista.apellido}}
+                    </td>
+                    <td>
+                        {{deportista.equipo}}
+                    </td>
+                    <td>
+                        {{deportista.anotaciones}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+    <p-tabPanel *ngIf="deporteTorneo != 2" header="Valla Menos Vencida">
+        <p-table #dt1 [value]="listaDeportistasValla" dataKey="id"
+        styleClass="p-datatable-customers p-datatable-gridlines" [globalFilterFields]="['nombre','apellido']">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+            <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Portero" />
+                    </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                    Nombre
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                    Apellido
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                    Equipo
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                    Goles Recibidos
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-deportista>
+            <tr>
+                <td>
+                    {{deportista.nombre}}
+                </td>
+                <td>
+                    {{deportista.apellido}}
+                </td>
+                <td>
+                    {{deportista.equipo}}
+                </td>
+                <td>
+                    {{deportista.golesRecibidos}}
+                </td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </p-tabPanel>
+</p-tabView>    

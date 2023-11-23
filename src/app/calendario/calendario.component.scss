@@ -1,0 +1,102 @@
+.estilo_campo_requerido {
+    text-align: left;
+    margin-bottom: 0.52vw;
+    letter-spacing: 0px;
+    color: #fd2b4c;
+    opacity: 1;
+}
+
+/* Estilos para el contenedor */
+.container-fluid {
+    padding: 20px;
+}
+
+/* Estilos para la imagen del encabezado */
+.header-image {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la imagen del footer */
+.footer-image {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el título del programa */
+.program-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los títulos de fechas */
+.date-title {
+    text-align: center;
+    color: red;
+    margin-bottom: 10px;
+}
+
+/* Estilos para la tabla */
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón de descarga */
+.download-btn {
+    width: 100%;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Estilos para los mensajes informativos */
+.p-messages {
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    .ml-2 {
+        margin-left: 2rem;
+    }
+}
+
+/* Estilos para los botones */
+.p-button {
+    margin-right: 5px;
+}
+
+/* Estilos para el calendario */
+p-calendar {
+    margin-right: 10px;
+}
+
+/* Estilos para la tabla de configuración de partidos */
+.p-datatable-customers {
+    margin-top: 20px;
+
+    /* Estilos para las celdas de la tabla */
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* Estilos para los selects dentro de la tabla */
+    .form-control {
+        width: 100%;
+    }
+}
+
+
+/* Nuevos estilos para alinear los elementos */
+.p-text-center.col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .p-button {
+        margin-right: 10px;
+    }
+}

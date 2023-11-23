@@ -1,0 +1,117 @@
+export const commonMessages = {
+    ARRAY_DEPORTES: [
+        { codigo: 1, nombre: 'Fútbol' },
+        { codigo: 2, nombre: 'Baloncesto' },
+        { codigo: 3, nombre: 'Futsala' }
+    ],
+    /*ARRAY_CATEGORIAS: [
+        { codigo: 1, nombre: 'Infantil' },
+        { codigo: 2, nombre: 'Junior' },
+        { codigo: 3, nombre: 'Juvenil' },
+        { codigo: 4, nombre: 'Mayores' },
+        { codigo: 5, nombre: 'Senior-Master' }
+    ],*/
+    ARRAY_LOCALIDADES: [
+        { codigo: 1, nombre: 'Cancha Divino Niño' },
+        { codigo: 2, nombre: 'Estadio Municipal' },
+        { codigo: 3, nombre: 'Coliseo Ciudad Jardin' }
+    ],
+    ARRAY_ANNIOS: [
+        { codigo: 1, nombre: 'Desde 10 a 15 años' },
+        { codigo: 2, nombre: 'Desde 15 a 30 años' },
+        { codigo: 3, nombre: 'Libre' }
+    ],
+    ARRAY_PLANILLAS: [
+        { codigo: 1, nombre: 'Planilla Fútbol' },
+        { codigo: 2, nombre: 'Planilla Baloncesto' },
+        { codigo: 3, nombre: 'Planilla Futsala' }
+    ],
+    ARRAY_RAMAS:[
+        { codigo: 'M', nombre: 'Masculina' },
+        { codigo: 'F', nombre: 'Femenina' },
+    ],
+    ARRAY_DIVISIONES:[
+        { codigo: 1, nombre: 'Aficionada' },
+        { codigo: 2, nombre: 'Profesional' },
+    ],
+    ARRAY_IDENTIFICACIONES:[
+        { codigo: 1, nombre: 'Tarjeta de Identidad' },
+        { codigo: 2, nombre: 'Cédula' },
+    ],
+    ARRAY_ROLES:[
+        { codigo: 1, nombre: 'Administrador' },
+        { codigo: 2, nombre: 'Delegado' },
+        { codigo: 3, nombre: 'Planillero' }
+    ],
+    ARRAY_CARNET:[
+        { codigo: 'S', nombre: 'SI' },
+        { codigo: 'N', nombre: 'NO' },
+    ],
+    ARRAY_PERIODO:[
+        { codigo: 1, nombre: 'Periodo 1' },
+        { codigo: 2, nombre: 'Periodo 2' },
+        { codigo: 3, nombre: 'Periodo 3' },
+        { codigo: 4, nombre: 'Periodo 4' },
+    ],
+    ARRAY_FASES:[
+        { codigo: 1, nombre: 'Fase Todos Contra Todos' },
+        { codigo: 2, nombre: 'Fase de Grupos' },
+        { codigo: 3, nombre: 'Octavos de Final' },
+        { codigo: 4, nombre: 'Cuartos de Final' },
+        { codigo: 5, nombre: 'Semifinal' },
+        { codigo: 6, nombre: 'Final' },
+    ],
+    NOMBRE_CAMPEONATO: "Nombre Campeonato",
+    CAMPO_OBLIGATORIO_LABEL: 'El campo es requerido',
+    DEPORTE: "Deporte",
+    SELECCIONE_OPCION: "Seleccione una opción",
+    CATEGORIA: "Categoría",
+    RAMA: "Rama",
+    LOCALIDAD: "Localidad",
+    RANGO_ANNIO: "Rango en años",
+    PLANILLA: "Planilla",
+    HTTP_SUCCESS_LABEL: 'Datos guardados correctamente',
+    HTTP_ERROR_LABEL: 'Error al guardar datos',
+    DIVISION: "División",
+    NOMBRE_DELEGADO: "Nombre delegado",
+    APELLIDO_DELEGADO: "Apellido delegado",
+    NOMBRE_USUARIO: "Nombre Usuario",
+    APELLIDO_USUARIO: "Apellido Usuario",
+    USUARIO: "Usuario",
+    IDENTIFICACION: "Identificación",
+    ROL: "Rol",
+    CELULAR: "Celular",
+    CONTRASENA: "Contraseña",
+    CONTRASENA_NUEVA: "Contraseña Nueva",
+    REPETIR_CONTRASENA: "Repetir Contraseña",
+    CONTRASENA_NO_COINCIDEN: 'Las contraseñas no coinciden',
+    NOMBRE_EQUIPO:"Nombre del equipo",
+    CAMPEONATO:"Campeonato",
+    DELEGADO:"Delegado encargado",
+    NOMBRE_DEPORTISTA: "Nombre Deportista",
+    TIPO_IDENTIFICACION: "Tipo de Identificación",
+    APELLIDO_DEPORTISTA: "Apellido Deportista",
+    FECHA_NACIMIENTO: "Fecha de Nacimiento",
+    EQUIPO: "Equipo",
+    CARNET: "Carnet",
+    POSICION: "Posición",
+    ARBITRO: "Arbitro",
+    FECHA: "Fecha",
+    HORA: "Hora",
+    CIUDAD: "Ciudad",
+    PERIODO: "Periodo",
+    SELECCIONE_DOCUMENTO: "Cargue su documento",
+    NOMBRE_PLANILLERO: "Nombre planillero",
+    APELLIDO_PLANILLERO: "Apellido planillero",
+    GRUPO: "Grupo",
+    JUEZ: "Juez",
+    INFORME_ARBITRAL: "Informe Arbitral",
+    MENSAJE_MIN_MAX_IDENTIFICACIOM: "Su identificación debe tener entre 7 y 10 dígitos",
+    MENSAJE_CELULAR: "Su celular debe tener 10 dígitos",
+    GUARDAR: "Guardar",
+    CANCELAR: "Cancelar",
+    ACTUALIZAR: "Actualizar",
+    DESCARGAR_PLANILLA: "Descargar Planilla",
+    FASE: "Fase",
+    JORNADA: "Jornada"
+}

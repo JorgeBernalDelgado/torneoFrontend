@@ -1,0 +1,261 @@
+
+.estilo_campo_requerido {
+    text-align: left;
+    margin-bottom: 0.52vw;
+    letter-spacing: 0px;
+    color: #fd2b4c;
+    opacity: 1;
+}
+
+:host ::ng-deep {
+    .p-dropdown {
+        width: 14rem;
+        font-weight: normal;
+    }
+    
+    .product-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    .product-description {
+        margin: 0 0 1rem 0;
+    }
+    
+    .product-category-icon {
+        vertical-align: middle;
+        margin-right: .5rem;
+    }
+    
+    .product-category {
+        font-weight: 600;
+        vertical-align: middle;
+    }
+    
+    .product-list-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        width: 100%;
+    
+        img {
+            width: 150px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            margin-right: 2rem;
+        }
+    
+        .product-list-detail {
+            flex: 1 1 0;
+        }
+    
+        .p-rating {
+            margin: 0 0 .5rem 0;
+        }
+    
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: .5rem;
+            align-self: flex-end;
+        }
+    
+        .product-list-action {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .p-button {
+            margin-bottom: .5rem;
+        }
+    }
+    
+    .product-grid-item {
+        margin: .5em;
+        border: 1px solid #dee2e6;
+    
+        .product-grid-item-top,
+        .product-grid-item-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        img {
+            width: 75%;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            margin: 2rem 0;
+        }
+    
+        .product-grid-item-content {
+            text-align: center;
+
+            .imgDeporte {
+                float: left;
+                height: 85px;
+                width: 106px;
+                border-radius:150px;
+            }
+
+            .imgLogo {
+                float: right;
+                height: 85px;
+                width: 106px;
+                border-radius:150px;
+            }
+        }
+    
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+}
+
+.card {
+    padding: 2rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 576px) {
+	:host ::ng-deep .product-list-item {
+		flex-direction: column;
+		align-items: center;
+
+		img {
+			width: 75%;
+			margin: 2rem 0;
+		}
+
+		.product-list-detail {
+			text-align: center;
+		}
+
+		.product-price {
+			align-self: center;
+		}
+
+		.product-list-action {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.product-list-action {
+			margin-top: 2rem;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+		}
+	}
+}
+
+
+section{
+    background-color: #f1f1f1;
+    //background-image: url('https://unsplash.com/es/fotos/s3leOixsIX0');
+    background-size: cover;
+    background-position: center;
+  }
+
+  //carnet
+  .carnet-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //min-height: 100vh;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.carnet {
+    position: relative;
+    //background-image: url('assets/img/fondo_carnet_futbol.jpg');
+    background-size: cover;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%; /* Altura fija de los carnets */
+    //width: calc(100% / 3 - 20px); /* Tamaño de carnets con margen */
+    color: #fff;
+    display: flex;
+    flex-direction: row; /* Cambio a disposición horizontal */
+    overflow: hidden; /* Recortar contenido que exceda */
+}
+
+.carnet::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.carnet-photo {
+    width: 150px;
+    height: 100%; /* Aprovecha toda la altura del carnet */
+    border-radius: 10px 0 0 10px; /* Bordes redondeados */
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.foto-jugador {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carnet-info {
+    flex-grow: 1;
+    padding: 15px; /* Aumenta el espacio alrededor del contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuir elementos verticalmente */
+}
+
+.titulo-carnet {
+    font-family: 'Georgia', serif;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.carnet-info label {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.carnet-info span {
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.boton-descargar {
+    margin-top: 15px;
+}
+
+
+  .boton-descargar {
+    position: absolute;
+    //top: 50%;
+    //left: 50%;
+    transform: translate(-100%, -100%);
+    //padding: 10px 20px;
+    //background-color: #ff0000;
+    //color: #fd2b4c;
+    //text-decoration: none;
+    //border-radius: 5px;
+  }
+
+/* Estilos para el título del programa */
+.program-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
